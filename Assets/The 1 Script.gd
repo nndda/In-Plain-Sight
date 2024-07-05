@@ -1,8 +1,40 @@
 extends Node2D
 
-#CAUTION: DON'T TRY THIS AT HOME
-#region Embedded Theatre plugin, with modifications - ff5b5b01d5bf9b9484348a90aa746f28024e3653 
 
+@export_category("Theatre Setup")
+@export_file("*.dlg") var dialogue_file : String = ""
+@export var dialogue_label_container : Control
+
+var dialogue : Dialogue
+var stage := Stage.new()
+var dialogue_label := DialogueLabel.new()
+
+
+func _enter_tree() -> void:
+    # Initialize Theatre
+    dialogue = Dialogue.new(FileAccess.get_file_as_string(dialogue_file))
+    dialogue_label.fit_content = true
+    dialogue_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+    dialogue_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+    dialogue_label_container.add_child(dialogue_label)
+
+    add_child(stage)
+    stage.dialogue_label = dialogue_label
+    dialogue_label.set_stage(stage)
+
+
+func _ready() -> void:
+    stage.start(dialogue)
+
+
+func _input(event: InputEvent) -> void:
+    if event.is_action_pressed(&"Progress"):
+        stage.progress()
+
+
+#CAUTION: DON'T TRY THIS AT HOME
+
+#region Embedded Theatre plugin, with modifications - ff5b5b01d5bf9b9484348a90aa746f28024e3653 
 class Dialogue extends Resource:
     ## Compiled [Dialogue] resource.
     ##

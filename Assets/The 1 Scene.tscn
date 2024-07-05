@@ -2,5 +2,13 @@
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
 
-[node name="The1Scene" type="Node2D"]
+[node name="The1Scene" type="Node2D" node_paths=PackedStringArray("dialogue_label_container")]
 script = ExtResource("1_816ah")
+dialogue_file = "res://Assets/The 1000 Words Writing.dlg"
+dialogue_label_container = NodePath("DialogueLabelContainer")
+
+[node name="DialogueLabelContainer" type="PanelContainer" parent="."]
+offset_left = 256.0
+offset_top = 488.0
+offset_right = 896.0
+offset_bottom = 624.0
