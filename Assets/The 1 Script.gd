@@ -2,6 +2,11 @@ extends Control
 
 var environment : Environment
 
+@onready var timer_elapsed_second : Timer = $TimerElapsedSecond
+
+@export_category("Decors")
+@export var time_label : Label
+
 @export_category("User Configurations")
 @export var slider_brightness : HSlider
 @export var slider_contrast : HSlider
@@ -135,6 +140,23 @@ func _on_stage_progressed() -> void:
 #endregion
 
 
+#region NOTE: Time handler
+var elapsed_time_second : int = 60 * 18
+var elapsed_hour : int
+var elapsed_minute : int
+var elapsed_second : int
+
+func update_time() -> void:
+    elapsed_time_second += 1
+    elapsed_hour = int(elapsed_time_second / 3600.0)
+    elapsed_minute = int((elapsed_time_second % 3600) / 60.0)
+    elapsed_second = int(elapsed_time_second % 60)
+
+    time_label.text = "%02d:%02d:%02d" % [
+        elapsed_hour, elapsed_minute, elapsed_second
+    ]
+#endregion
+
 func _enter_tree() -> void:
     # Initialize Theatre
     dialogue = Dialogue.new(FileAccess.get_file_as_string(dialogue_file))
@@ -173,6 +195,8 @@ func _ready() -> void:
     spinbox_bg_opacity.value = 80
 
     stage.start(dialogue)
+    timer_elapsed_second.start(1.0)
+    timer_elapsed_second.timeout.connect(update_time)
 
 
 func _input(event: InputEvent) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=19 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
 [ext_resource type="FontFile" uid="uid://dp1p532o3fok0" path="res://Assets/The 1 Font.ttf" id="2_vjcr7"]
@@ -67,6 +67,9 @@ border_width_top = 2
 border_width_right = 6
 border_width_bottom = 4
 border_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_uaacf"]
+font_size = 22
 
 [sub_resource type="Animation" id="Animation_j1v22"]
 resource_name = "enter"
@@ -159,7 +162,7 @@ _data = {
 "exit": SubResource("Animation_iexly")
 }
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("slider_brightness", "slider_contrast", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("time_label", "slider_brightness", "slider_contrast", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -168,6 +171,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_yhgmm")
 script = ExtResource("1_816ah")
+time_label = NodePath("TopControl/Margin/HBoxContainer/Left/Time")
 slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
 slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
 button_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption")
@@ -181,6 +185,8 @@ dialogue_file = "res://Assets/The 1000 Words Writing.dlg"
 actor_label = NodePath("DialogueLabelContainer/HBoxContainer/ActorLabel")
 dialogue_label_container = NodePath("DialogueLabelContainer/HBoxContainer")
 
+[node name="TimerElapsedSecond" type="Timer" parent="."]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -2
 follow_viewport_enabled = true
@@ -188,23 +194,26 @@ follow_viewport_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="CanvasLayer"]
 environment = SubResource("Environment_vr7rt")
 
-[node name="Colors" type="HBoxContainer" parent="CanvasLayer"]
-offset_left = 136.0
-offset_top = 136.0
-offset_right = 288.0
-offset_bottom = 184.0
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="C" type="ColorRect" parent="CanvasLayer/Colors"]
+[node name="Colors" type="HBoxContainer" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+
+[node name="C" type="ColorRect" parent="CanvasLayer/CenterContainer/Colors"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 color = Color(0, 1, 1, 1)
 
-[node name="M" type="ColorRect" parent="CanvasLayer/Colors"]
+[node name="M" type="ColorRect" parent="CanvasLayer/CenterContainer/Colors"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Y" type="ColorRect" parent="CanvasLayer/Colors"]
+[node name="Y" type="ColorRect" parent="CanvasLayer/CenterContainer/Colors"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 color = Color(1, 1, 0, 1)
@@ -291,6 +300,18 @@ theme_override_constants/margin_bottom = 18
 [node name="HBoxContainer" type="HBoxContainer" parent="TopControl/Margin"]
 layout_mode = 2
 alignment = 2
+
+[node name="Left" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Time" type="Label" parent="TopControl/Margin/HBoxContainer/Left"]
+layout_mode = 2
+text = "00:00:00"
+label_settings = SubResource("LabelSettings_uaacf")
+
+[node name="Fullscreen" type="Button" parent="TopControl/Margin/HBoxContainer/Left"]
+layout_mode = 2
 
 [node name="Contrast" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
 layout_mode = 2
