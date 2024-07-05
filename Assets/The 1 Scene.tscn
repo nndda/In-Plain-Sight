@@ -1,6 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=14 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
+[ext_resource type="FontFile" uid="uid://dp1p532o3fok0" path="res://Assets/The 1 Font.ttf" id="2_vjcr7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3rk7"]
 
 [sub_resource type="Gradient" id="Gradient_7aere"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -31,15 +34,41 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [sub_resource type="Theme" id="Theme_yhgmm"]
+Button/styles/disabled = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/disabled_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/focus = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/hover = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/hover_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/hover_pressed = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/normal = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/normal_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/pressed = SubResource("StyleBoxEmpty_r3rk7")
+Button/styles/pressed_mirrored = SubResource("StyleBoxEmpty_r3rk7")
 HSlider/icons/grabber = SubResource("GradientTexture2D_texl3")
 HSlider/icons/grabber_disabled = SubResource("GradientTexture2D_texl3")
 HSlider/icons/grabber_highlight = SubResource("GradientTexture2D_imfvt")
 HSlider/styles/grabber_area = SubResource("StyleBoxTexture_ipd6t")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxTexture_ipd6t")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3rk7"]
+[sub_resource type="Environment" id="Environment_vr7rt"]
+background_mode = 3
+background_canvas_max_layer = -2
+adjustment_enabled = true
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("dialogue_label_container")]
+[sub_resource type="FontVariation" id="FontVariation_ebyde"]
+base_font = ExtResource("2_vjcr7")
+spacing_glyph = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3fxj"]
+bg_color = Color(0.0755101, 0.0755101, 0.0755101, 1)
+border_width_left = 6
+border_width_top = 2
+border_width_right = 6
+border_width_bottom = 4
+border_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("slider_brightness", "slider_contrast", "button_cc", "panel_config_cc", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,8 +77,45 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_yhgmm")
 script = ExtResource("1_816ah")
+slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
+slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
+button_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption")
+panel_config_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control")
+panel_config_cc_2 = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer")
+spinbox_font_size = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize/SpinBox")
+spinbox_letter_spacing = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing/SpinBox")
+spinbox_bg_opacity = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity/SpinBox")
 dialogue_file = "res://Assets/The 1000 Words Writing.dlg"
-dialogue_label_container = NodePath("DialogueLabelContainer")
+actor_label = NodePath("DialogueLabelContainer/HBoxContainer/ActorLabel")
+dialogue_label_container = NodePath("DialogueLabelContainer/HBoxContainer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -2
+follow_viewport_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="CanvasLayer"]
+environment = SubResource("Environment_vr7rt")
+
+[node name="Colors" type="HBoxContainer" parent="CanvasLayer"]
+offset_left = 136.0
+offset_top = 136.0
+offset_right = 288.0
+offset_bottom = 184.0
+
+[node name="C" type="ColorRect" parent="CanvasLayer/Colors"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(0, 1, 1, 1)
+
+[node name="M" type="ColorRect" parent="CanvasLayer/Colors"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Y" type="ColorRect" parent="CanvasLayer/Colors"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+color = Color(1, 1, 0, 1)
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 1
@@ -66,6 +132,18 @@ offset_left = 256.0
 offset_top = 488.0
 offset_right = 896.0
 offset_bottom = 624.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_r3rk7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DialogueLabelContainer"]
+layout_mode = 2
+
+[node name="ActorLabel" type="Label" parent="DialogueLabelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = SubResource("FontVariation_ebyde")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_g3fxj")
+text = "Actor:"
 
 [node name="BorderDecor" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0.533333)
@@ -163,7 +241,7 @@ max_value = 1.0
 step = 0.05
 value = 0.5
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="BottomControl" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -177,17 +255,17 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_r3rk7")
 
-[node name="Margin" type="MarginContainer" parent="PanelContainer"]
+[node name="Margin" type="MarginContainer" parent="BottomControl"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 18
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Margin"]
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomControl/Margin"]
 layout_mode = 2
 
-[node name="CloseCaption" type="Button" parent="PanelContainer/Margin/HBoxContainer"]
+[node name="CloseCaption" type="Button" parent="BottomControl/Margin/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
@@ -206,13 +284,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_r3rk7")
 toggle_mode = true
 text = "󰅞"
 
-[node name="Control" type="Control" parent="PanelContainer/Margin/HBoxContainer/CloseCaption"]
+[node name="Control" type="Control" parent="BottomControl/Margin/HBoxContainer/CloseCaption"]
+visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control"]
+[node name="PanelContainer" type="PanelContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -221,60 +300,60 @@ offset_top = -104.0
 offset_right = 280.0
 grow_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="FontSize" type="HBoxContainer" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="FontSize" type="HBoxContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize"]
+[node name="Label" type="Label" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Font size"
 
-[node name="SpinBox" type="SpinBox" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize"]
+[node name="SpinBox" type="SpinBox" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize"]
 layout_mode = 2
-min_value = 1.0
-max_value = 32.0
-step = 0.5
-value = 16.0
+min_value = 14.0
+max_value = 28.0
+value = 22.0
 alignment = 2
-suffix = "pt"
+suffix = "px"
 
-[node name="LetterSpacing" type="HBoxContainer" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="LetterSpacing" type="HBoxContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing"]
+[node name="Label" type="Label" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Letter spacing"
 
-[node name="SpinBox" type="SpinBox" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing"]
+[node name="SpinBox" type="SpinBox" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing"]
 layout_mode = 2
-max_value = 3.0
-step = 0.05
-value = 0.5
+min_value = 1.0
+max_value = 6.0
+value = 1.0
 alignment = 2
-suffix = "pt"
+suffix = "px"
 
-[node name="BackgroundOpacity" type="HBoxContainer" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="BackgroundOpacity" type="HBoxContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity"]
+[node name="Label" type="Label" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Background opacity"
 
-[node name="SpinBox" type="SpinBox" parent="PanelContainer/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity"]
+[node name="SpinBox" type="SpinBox" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity"]
 layout_mode = 2
 min_value = 10.0
+step = 10.0
 value = 10.0
 alignment = 2
 suffix = "%"

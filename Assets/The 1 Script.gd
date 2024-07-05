@@ -1,15 +1,30 @@
 extends Control
 
-var allow_progress := false
+var environment : Environment
+
+@export_category("User Configurations")
+@export var slider_brightness : HSlider
+@export var slider_contrast : HSlider
+@export_group("Closed Caption")
+@export var button_cc : Button
+@export var panel_config_cc : Control
+@export var panel_config_cc_2 : Control
+@export var spinbox_font_size : SpinBox
+@export var spinbox_letter_spacing : SpinBox
+@export var spinbox_bg_opacity : SpinBox
+
+var allow_progress := true
 
 @export_category("Theatre Setup")
 @export_file("*.dlg") var dialogue_file : String = ""
+@export var actor_label : Label
 @export var dialogue_label_container : Control
 
 var dialogue : Dialogue
 var stage := Stage.new()
 var dialogue_label := DialogueLabel.new()
-
+var dialogue_font_variation : FontVariation
+var dialogue_stylebox : StyleBoxFlat
 
 const ICON : Dictionary = {
     BRIGTHNESS = &"\udb81\udda8",
@@ -27,13 +42,78 @@ const ICON : Dictionary = {
     GITHUB = &"\uf09b",
 }
 
+func _gui_input(event: InputEvent) -> void:
+    pass
+
+#region NOTE: User configurations
+
+var mouse_on_config_state : Dictionary = {
+    button_cc = false,
+    panel_config_cc = false,
+    panel_config_cc_2 = false,
+
+    slider_contrast = false,
+    slider_brightness = false,
+
+    spinbox_font_size = false,
+    spinbox_letter_spacing = false,
+    spinbox_bg_opacity = false,
+}
+func set_mouse_on_config_state(config_ui : String, state : bool) -> void:
+    mouse_on_config_state[config_ui] = state
+func is_mouse_on_config() -> bool:
+    for config_ui : String in mouse_on_config_state:
+        if mouse_on_config_state[config_ui]:
+            return true
+    return false
+
+func initialize_config_ui() -> void:
+    for config_ui : String in mouse_on_config_state:
+        var config_node : Control = get(&"%s" % config_ui)
+        config_node.mouse_entered.connect(
+            set_mouse_on_config_state.bind(config_ui, true)
+        )
+        config_node.mouse_exited.connect(
+            set_mouse_on_config_state.bind(config_ui, false)
+        )
+
+    button_cc.pressed.connect(_on_button_cc_pressed)
+
+    slider_contrast.value_changed.connect(_on_slider_contrast_value_changed)
+    slider_brightness.value_changed.connect(_on_slider_brightness_value_changed)
+
+    spinbox_font_size.value_changed.connect(_on_spinbox_font_size_value_changed)
+    spinbox_letter_spacing.value_changed.connect(_on_spinbox_letter_spacing_value_changed)
+    spinbox_bg_opacity.value_changed.connect(_on_spinbox_bg_opacity_value_changed)
+
+func _on_slider_contrast_value_changed(value : float) -> void:
+    environment.adjustment_contrast = value
+
+func _on_slider_brightness_value_changed(value: float) -> void:
+    environment.adjustment_brightness = value
+
+func _on_button_cc_pressed() -> void:
+    panel_config_cc.visible = !panel_config_cc.visible
+
+func _on_spinbox_font_size_value_changed(value : float) -> void:
+    dialogue_label.add_theme_font_size_override(&"normal_font_size", value)
+    actor_label.add_theme_font_size_override(&"font_size", value)
+
+func _on_spinbox_letter_spacing_value_changed(value : float) -> void:
+    dialogue_font_variation.spacing_glyph = value
+
+func _on_spinbox_bg_opacity_value_changed(value : float) -> void:
+    value = value / 100
+    dialogue_stylebox.bg_color.a = value
+    dialogue_stylebox.border_color.a = value
+#endregion
 
 func _enter_tree() -> void:
     # Initialize Theatre
     dialogue = Dialogue.new(FileAccess.get_file_as_string(dialogue_file))
     dialogue_label.fit_content = true
     dialogue_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-    dialogue_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+    dialogue_label.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
     dialogue_label_container.add_child(dialogue_label)
 
     add_child(stage)
@@ -46,12 +126,32 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+    environment = $CanvasLayer/WorldEnvironment.environment
+
+    dialogue_font_variation = actor_label.get_theme_font(&"font")
+    dialogue_stylebox = actor_label.get_theme_stylebox(&"normal")
+
+    dialogue_label.add_theme_stylebox_override(&"normal", dialogue_stylebox)
+    dialogue_label.add_theme_font_override(&"normal_font", dialogue_font_variation)
+
+    initialize_config_ui()
+
+    # Set defaults
+    spinbox_font_size.value = 18
+    spinbox_letter_spacing.value = 1
+    spinbox_bg_opacity.value = 80
+
     stage.start(dialogue)
 
 
 func _input(event: InputEvent) -> void:
-    if event.is_action_pressed(&"Progress"):
-        stage.progress()
+    if allow_progress and stage.is_playing():
+        if event.is_action_pressed(&"Progress"):
+            if event is InputEventMouse:
+                if !is_mouse_on_config():
+                    stage.progress()
+            else:
+                stage.progress()
 
 
 #CAUTION: DON'T TRY THIS AT HOME
