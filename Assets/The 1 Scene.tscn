@@ -358,6 +358,7 @@ theme_override_constants/margin_bottom = 18
 layout_mode = 2
 
 [node name="CloseCaption" type="Button" parent="BottomControl/Margin/HBoxContainer"]
+custom_minimum_size = Vector2(42, 42)
 layout_mode = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
@@ -374,7 +375,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_r3rk7")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_r3rk7")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_r3rk7")
 toggle_mode = true
-text = "󰅞"
+text = "󰅞 "
 
 [node name="Control" type="Control" parent="BottomControl/Margin/HBoxContainer/CloseCaption"]
 modulate = Color(1, 1, 1, 0)
