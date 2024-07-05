@@ -1,5 +1,6 @@
-extends Node2D
+extends Control
 
+var allow_progress := false
 
 @export_category("Theatre Setup")
 @export_file("*.dlg") var dialogue_file : String = ""
@@ -21,6 +22,10 @@ func _enter_tree() -> void:
     add_child(stage)
     stage.dialogue_label = dialogue_label
     dialogue_label.set_stage(stage)
+
+    stage.allow_cancel = false
+    stage.allow_func = true
+    stage.allow_skip = false
 
 
 func _ready() -> void:
