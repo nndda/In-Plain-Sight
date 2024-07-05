@@ -8,6 +8,7 @@ var environment : Environment
 @export_group("Closed Caption")
 @export var button_cc : Button
 @export var panel_config_cc : Control
+@export var panel_config_cc_animation_player : AnimationPlayer
 @export var panel_config_cc_2 : Control
 @export var spinbox_font_size : SpinBox
 @export var spinbox_letter_spacing : SpinBox
@@ -46,7 +47,6 @@ func _gui_input(event: InputEvent) -> void:
     pass
 
 #region NOTE: User configurations
-
 var mouse_on_config_state : Dictionary = {
     button_cc = false,
     panel_config_cc = false,
@@ -86,14 +86,33 @@ func initialize_config_ui() -> void:
     spinbox_letter_spacing.value_changed.connect(_on_spinbox_letter_spacing_value_changed)
     spinbox_bg_opacity.value_changed.connect(_on_spinbox_bg_opacity_value_changed)
 
+    panel_config_cc_animation_player.animation_started.connect(
+        _on_panel_config_cc_animation_player_animation_started
+    )
+    panel_config_cc_animation_player.animation_finished.connect(
+        _on_panel_config_cc_animation_player_animation_finished
+    )
+
 func _on_slider_contrast_value_changed(value : float) -> void:
     environment.adjustment_contrast = value
 
 func _on_slider_brightness_value_changed(value: float) -> void:
     environment.adjustment_brightness = value
 
+func _on_panel_config_cc_animation_player_animation_started(anim_name : StringName) -> void:
+    if anim_name == &"enter":
+        panel_config_cc.visible = true
+
+func _on_panel_config_cc_animation_player_animation_finished(anim_name : StringName) -> void:
+    if anim_name == &"exit":
+        panel_config_cc.visible = false
+
 func _on_button_cc_pressed() -> void:
-    panel_config_cc.visible = !panel_config_cc.visible
+    if !panel_config_cc_animation_player.is_playing():
+        if not panel_config_cc.visible:
+            panel_config_cc_animation_player.play(&"enter")
+        else:
+            panel_config_cc_animation_player.play(&"exit")
 
 func _on_spinbox_font_size_value_changed(value : float) -> void:
     dialogue_label.add_theme_font_size_override(&"normal_font_size", value)
@@ -108,6 +127,14 @@ func _on_spinbox_bg_opacity_value_changed(value : float) -> void:
     dialogue_stylebox.border_color.a = value
 #endregion
 
+
+#region NOTE: Theatre control
+func _on_stage_progressed() -> void:
+    if panel_config_cc.visible and !panel_config_cc_animation_player.is_playing():
+        panel_config_cc_animation_player.play(&"exit")
+#endregion
+
+
 func _enter_tree() -> void:
     # Initialize Theatre
     dialogue = Dialogue.new(FileAccess.get_file_as_string(dialogue_file))
@@ -119,6 +146,8 @@ func _enter_tree() -> void:
     add_child(stage)
     stage.dialogue_label = dialogue_label
     dialogue_label.set_stage(stage)
+
+    stage.progressed.connect(_on_stage_progressed)
 
     stage.allow_cancel = false
     stage.allow_func = true
@@ -137,6 +166,8 @@ func _ready() -> void:
     initialize_config_ui()
 
     # Set defaults
+    panel_config_cc.visible = false
+
     spinbox_font_size.value = 18
     spinbox_letter_spacing.value = 1
     spinbox_bg_opacity.value = 80

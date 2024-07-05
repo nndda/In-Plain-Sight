@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=18 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
 [ext_resource type="FontFile" uid="uid://dp1p532o3fok0" path="res://Assets/The 1 Font.ttf" id="2_vjcr7"]
@@ -68,7 +68,98 @@ border_width_right = 6
 border_width_bottom = 4
 border_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("slider_brightness", "slider_contrast", "button_cc", "panel_config_cc", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
+[sub_resource type="Animation" id="Animation_j1v22"]
+resource_name = "enter"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, -2),
+"update": 0,
+"values": [Vector2(0, 24), Vector2(0, -6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_iexly"]
+resource_name = "exit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.5, -2),
+"update": 0,
+"values": [Vector2(0, -6), Vector2(0, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xdyc7"]
+resource_name = "RESET"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector2(0, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b26na"]
+_data = {
+"RESET": SubResource("Animation_xdyc7"),
+"enter": SubResource("Animation_j1v22"),
+"exit": SubResource("Animation_iexly")
+}
+
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("slider_brightness", "slider_contrast", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,6 +172,7 @@ slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider
 slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
 button_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption")
 panel_config_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control")
+panel_config_cc_animation_player = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/AnimationPlayer")
 panel_config_cc_2 = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer")
 spinbox_font_size = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize/SpinBox")
 spinbox_letter_spacing = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing/SpinBox")
@@ -285,11 +377,21 @@ toggle_mode = true
 text = "󰅞"
 
 [node name="Control" type="Control" parent="BottomControl/Margin/HBoxContainer/CloseCaption"]
-visible = false
+modulate = Color(1, 1, 1, 0)
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
+offset_top = 24.0
+offset_bottom = 24.0
 grow_horizontal = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control"]
+root_node = NodePath("../../../../../..")
+libraries = {
+"": SubResource("AnimationLibrary_b26na")
+}
+autoplay = "RESET"
 
 [node name="PanelContainer" type="PanelContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control"]
 layout_mode = 1
