@@ -11,6 +11,23 @@ var stage := Stage.new()
 var dialogue_label := DialogueLabel.new()
 
 
+const ICON : Dictionary = {
+    BRIGTHNESS = &"\udb81\udda8",
+    CONTRAST = &"\udb80\udd97",
+
+    CAMCORDER = &"\udb80\udcfc",
+    CAMCORDER_OFF = &"\udb80\udcff",
+
+    FULLSCREEN = &"\udb80\ude93",
+    FULLSCREEN_OFF = &"\udb80\ude94",
+
+    POWER = &"\udb81\udc25",
+
+    ITCHIO = &"\uef99",
+    GITHUB = &"\uf09b",
+}
+
+
 func _enter_tree() -> void:
     # Initialize Theatre
     dialogue = Dialogue.new(FileAccess.get_file_as_string(dialogue_file))
