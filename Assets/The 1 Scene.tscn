@@ -67,6 +67,10 @@ border_width_top = 2
 border_width_right = 6
 border_width_bottom = 4
 border_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="LabelSettings" id="LabelSettings_uaacf"]
 font_size = 19
@@ -278,20 +282,21 @@ border_width = 5.0
 
 [node name="DialogueLabelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 256.0
+offset_left = 216.0
 offset_top = 488.0
-offset_right = 896.0
+offset_right = 936.0
 offset_bottom = 624.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_r3rk7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DialogueLabelContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="ActorLabel" type="Label" parent="DialogueLabelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_fonts/font = SubResource("FontVariation_ebyde")
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_g3fxj")
 text = "Actor:"
 
