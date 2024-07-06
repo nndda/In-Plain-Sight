@@ -38,23 +38,10 @@ var dialogue_font_variation : FontVariation
 var dialogue_stylebox : StyleBoxFlat
 
 const ICON : Dictionary = {
-    BRIGTHNESS = &"\udb81\udda8",
-    CONTRAST = &"\udb80\udd97",
-
-    CAMCORDER = &"\udb80\udcfc",
-    CAMCORDER_OFF = &"\udb80\udcff",
-
     FULLSCREEN = &"\udb80\ude93",
     FULLSCREEN_OFF = &"\udb80\ude94",
-
-    POWER = &"\udb81\udc25",
-
-    ITCHIO = &"\uef99",
-    GITHUB = &"\uf09b",
 }
 
-func _gui_input(event: InputEvent) -> void:
-    pass
 
 #region NOTE: User configurations
 var mouse_on_config_state : Dictionary = {
@@ -115,7 +102,7 @@ func _on_button_display_mode_pressed() -> void:
         DisplayServer.WINDOW_MODE_FULLSCREEN if !is_fullscreen else
         DisplayServer.WINDOW_MODE_WINDOWED
     )
-    button_display_mode.text = "%s" %\
+    button_display_mode.text =\
         ICON.FULLSCREEN if is_fullscreen else\
         ICON.FULLSCREEN_OFF
 
@@ -149,11 +136,11 @@ func _on_button_cc_pressed() -> void:
             panel_config_cc_animation_player.play(&"exit")
 
 func _on_spinbox_font_size_value_changed(value : float) -> void:
-    dialogue_label.add_theme_font_size_override(&"normal_font_size", value)
-    actor_label.add_theme_font_size_override(&"font_size", value)
+    dialogue_label.add_theme_font_size_override(&"normal_font_size", int(value))
+    actor_label.add_theme_font_size_override(&"font_size", int(value))
 
 func _on_spinbox_letter_spacing_value_changed(value : float) -> void:
-    dialogue_font_variation.spacing_glyph = value
+    dialogue_font_variation.spacing_glyph = int(value)
 
 func _on_spinbox_bg_opacity_value_changed(value : float) -> void:
     value = value / 100
