@@ -601,10 +601,10 @@ class Dialogue extends Resource:
                 _update_used_function_calls()
 
         elif DialogueParser.is_valid_source(dlg_src) and dlg_src.split("\n", false).size() >= 2:
-            var stack : Dictionary = get_stack()[-1]
-            print("Parsing Dialogue from raw string: %s:%d" % [
-                stack["source"], stack["line"]
-            ])
+            #var stack : Dictionary = get_stack()[-1]
+            #print("Parsing Dialogue from raw string: %s:%d" % [
+                #stack["source"], stack["line"]
+            #])
             parser = DialogueParser.new(
                 # BUG
                 DialogueParser.normalize_indentation(dlg_src)
@@ -613,7 +613,8 @@ class Dialogue extends Resource:
             _update_used_variables()
             _update_used_function_calls()
 
-            _source_path = "%s:%d" % [stack["source"], stack["line"]]
+            #_source_path = "%s:%d" % [stack["source"], stack["line"]]
+            _source_path = "UwU"
 
     ## Load written [Dialogue] file from [param path]. Use [method Dialogue.new] instead to create a written [Dialogue] directly in the script.
     static func load(path : String) -> Dialogue:
