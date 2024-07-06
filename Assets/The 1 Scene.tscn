@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=32 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
 [ext_resource type="Texture2D" uid="uid://bv3v8hnfxq2cp" path="res://Assets/The 1 Sprite.png" id="2_4y6pa"]
@@ -58,17 +58,64 @@ background_mode = 3
 background_canvas_max_layer = -2
 adjustment_enabled = true
 
+[sub_resource type="Curve" id="Curve_8b67c"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.521875, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_hp3tb"]
+curve = SubResource("Curve_8b67c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jdy7c"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1280, 720, 1)
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 15.0
+initial_velocity_max = 55.0
+gravity = Vector3(0, 0, 0)
+scale_max = 5.0
+color = Color(0.518503, 0.518503, 0.518503, 1)
+alpha_curve = SubResource("CurveTexture_hp3tb")
+
+[sub_resource type="Gradient" id="Gradient_8128c"]
+offsets = PackedFloat32Array(0.581818, 0.630303, 0.70303, 0.818182)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.75969, 1, 1, 1, 0.320904, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xpa4y"]
+gradient = SubResource("Gradient_8128c")
+width = 3
+height = 3
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.9, 0.1)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_7gi7t"]
+offsets = PackedFloat32Array(0, 0.206061, 0.448485, 0.624242, 0.787879, 1)
+colors = PackedColorArray(1, 1, 1, 0.919865, 1, 1, 1, 1, 1, 1, 1, 0.793939, 1, 1, 1, 0.910408, 1, 1, 1, 0.572676, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6cuo3"]
+gradient = SubResource("Gradient_7gi7t")
+width = 640
+height = 640
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
 [sub_resource type="FontVariation" id="FontVariation_ebyde"]
 base_font = ExtResource("2_vjcr7")
 spacing_glyph = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3fxj"]
-bg_color = Color(0.0755101, 0.0755101, 0.0755101, 1)
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 6
 border_width_top = 2
 border_width_right = 6
 border_width_bottom = 4
-border_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+border_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -210,7 +257,7 @@ _data = {
 "exit": SubResource("Animation_iexly")
 }
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "sprite_parallax_ref", "background_parallax_ref", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "light", "light_parallax_ref", "sprite_parallax_ref", "background_parallax_ref", "shader_crt_overlay", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -219,16 +266,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_yhgmm")
 script = ExtResource("1_816ah")
-sprite = NodePath("CanvasLayer/Control/SpriteAnchor/Sprite")
-background = NodePath("CanvasLayer/Control/BackgroundAnchor/Background")
+sprite = NodePath("CanvasLayer/VNStage/SpriteAnchor/Sprite")
+background = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background")
 time_label = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/Time")
-sprite_parallax_ref = NodePath("CanvasLayer/Control/SpriteAnchor/Sprite/ParallaxRef")
+light = NodePath("CanvasLayer/VNStage/LightAnchor/PointLight2D")
+light_parallax_ref = NodePath("CanvasLayer/VNStage/LightAnchor/PointLight2D/ParallaxRef")
+light_parallax_distance_vec = Vector2(400, 400)
+light_parallax_speed = 900.0
+sprite_parallax_ref = NodePath("CanvasLayer/VNStage/SpriteAnchor/Sprite/ParallaxRef")
 sprite_parallax_distance_vec = Vector2(-48, -24)
 sprite_parallax_offset = Vector2(0, 80)
 sprite_parallax_speed = 120.0
-background_parallax_ref = NodePath("CanvasLayer/Control/BackgroundAnchor/Background/ParallaxRef")
+background_parallax_ref = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background/ParallaxRef")
 background_parallax_distance_vec = Vector2(48, 28)
 background_parallax_speed = 80.0
+shader_crt_overlay = NodePath("ShaderOverlayCRT")
 slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
 slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
 button_display_mode = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Display")
@@ -245,13 +297,6 @@ dialogue_file = "res://Assets/The 1000 Words Writing.dlg"
 actor_label = NodePath("DialogueLabelContainer/HBoxContainer/ActorLabel")
 dialogue_label_container = NodePath("DialogueLabelContainer/HBoxContainer")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 488.0
-offset_top = 112.0
-offset_right = 688.0
-offset_bottom = 288.0
-
 [node name="TimerElapsedSecond" type="Timer" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -260,6 +305,9 @@ follow_viewport_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="CanvasLayer"]
 environment = SubResource("Environment_vr7rt")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
+color = Color(0.582059, 0.657299, 0.685081, 1)
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 offset_right = 1152.0
@@ -285,7 +333,7 @@ custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 color = Color(1, 1, 0, 1)
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="VNStage" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -293,7 +341,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/Control"]
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/VNStage"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -303,7 +351,7 @@ grow_vertical = 2
 border_color = Color(0.569461, 0.388166, 1, 1)
 border_width = 5.0
 
-[node name="BackgroundAnchor" type="Control" parent="CanvasLayer/Control"]
+[node name="BackgroundAnchor" type="Control" parent="CanvasLayer/VNStage"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -313,12 +361,23 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="Sprite2D" parent="CanvasLayer/Control/BackgroundAnchor"]
+[node name="Background" type="Sprite2D" parent="CanvasLayer/VNStage/BackgroundAnchor"]
 texture = ExtResource("2_31udp")
 
-[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/Control/BackgroundAnchor/Background"]
+[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/BackgroundAnchor/Background"]
 
-[node name="SpriteAnchor" type="Control" parent="CanvasLayer/Control"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CanvasLayer/VNStage/BackgroundAnchor/Background"]
+amount = 45
+process_material = SubResource("ParticleProcessMaterial_jdy7c")
+texture = SubResource("GradientTexture2D_xpa4y")
+lifetime = 3.0
+preprocess = 120.0
+randomness = 1.0
+interpolate = false
+fract_delta = false
+local_coords = true
+
+[node name="SpriteAnchor" type="Control" parent="CanvasLayer/VNStage"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -328,12 +387,30 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sprite" type="Sprite2D" parent="CanvasLayer/Control/SpriteAnchor"]
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor"]
 position = Vector2(0, 80)
 texture = ExtResource("2_4y6pa")
 
-[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/Control/SpriteAnchor/Sprite"]
+[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/SpriteAnchor/Sprite"]
 position = Vector2(0, -80)
+
+[node name="LightAnchor" type="Control" parent="CanvasLayer/VNStage"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PointLight2D" type="PointLight2D" parent="CanvasLayer/VNStage/LightAnchor"]
+blend_mode = 2
+range_layer_min = -2
+range_layer_max = -2
+texture = SubResource("GradientTexture2D_6cuo3")
+
+[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/LightAnchor/PointLight2D"]
 
 [node name="DialogueLabelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
@@ -642,3 +719,13 @@ step = 10.0
 value = 10.0
 alignment = 2
 suffix = "%"
+
+[node name="ShaderOverlayCRT" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
