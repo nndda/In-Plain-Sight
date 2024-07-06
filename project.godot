@@ -14,6 +14,10 @@ config/name="o2a2-2024"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [gui]
 
 theme/custom_font="res://Assets/The 1 Font.ttf"
