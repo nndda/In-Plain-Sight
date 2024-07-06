@@ -208,7 +208,7 @@ _data = {
 "exit": SubResource("Animation_iexly")
 }
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("time_label", "slider_brightness", "slider_contrast", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("time_label", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,6 +220,9 @@ script = ExtResource("1_816ah")
 time_label = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/Time")
 slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
 slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
+button_display_mode = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Display")
+label_fullscreen = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Fullscreen")
+label_windowed = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Windowed")
 button_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption")
 panel_config_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control")
 panel_config_cc_animation_player = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/AnimationPlayer")
@@ -395,12 +398,27 @@ layout_mode = 2
 text = "00:00:00"
 label_settings = SubResource("LabelSettings_uaacf")
 
-[node name="Fullscreen" type="Button" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
+
+[node name="Display" type="Button" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(48, 45)
+layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 38
 text = "󰊓"
+
+[node name="Fullscreen" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "set to fullscreen"
+
+[node name="Windowed" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "set to windowed"
 
 [node name="Contrast" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
 layout_mode = 2

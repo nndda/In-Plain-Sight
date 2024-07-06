@@ -10,6 +10,11 @@ var environment : Environment
 @export_category("User Configurations")
 @export var slider_brightness : HSlider
 @export var slider_contrast : HSlider
+@export_group("Fullscreen")
+@export var button_display_mode : Button
+@export var label_fullscreen : Label
+@export var label_windowed : Label
+var is_fullscreen := false
 @export_group("Closed Caption")
 @export var button_cc : Button
 @export var panel_config_cc : Control
@@ -57,6 +62,8 @@ var mouse_on_config_state : Dictionary = {
     panel_config_cc = false,
     panel_config_cc_2 = false,
 
+    button_display_mode = false,
+
     slider_contrast = false,
     slider_brightness = false,
 
@@ -84,6 +91,10 @@ func initialize_config_ui() -> void:
 
     button_cc.pressed.connect(_on_button_cc_pressed)
 
+    button_display_mode.pressed.connect(_on_button_display_mode_pressed)
+    button_display_mode.mouse_entered.connect(_on_button_display_mode_mouse_entered)
+    button_display_mode.mouse_exited.connect(_on_button_display_mode_mouse_exited)
+
     slider_contrast.value_changed.connect(_on_slider_contrast_value_changed)
     slider_brightness.value_changed.connect(_on_slider_brightness_value_changed)
 
@@ -97,6 +108,24 @@ func initialize_config_ui() -> void:
     panel_config_cc_animation_player.animation_finished.connect(
         _on_panel_config_cc_animation_player_animation_finished
     )
+
+func _on_button_display_mode_pressed() -> void:
+    is_fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+    DisplayServer.window_set_mode(
+        DisplayServer.WINDOW_MODE_FULLSCREEN if !is_fullscreen else
+        DisplayServer.WINDOW_MODE_WINDOWED
+    )
+    button_display_mode.text = "%s" %\
+        ICON.FULLSCREEN if is_fullscreen else\
+        ICON.FULLSCREEN_OFF
+
+func _on_button_display_mode_mouse_entered() -> void:
+    label_fullscreen.visible = is_fullscreen
+    label_windowed.visible = !is_fullscreen
+
+func _on_button_display_mode_mouse_exited() -> void:
+    label_fullscreen.visible = false
+    label_windowed.visible = false
 
 func _on_slider_contrast_value_changed(value : float) -> void:
     environment.adjustment_contrast = value
@@ -158,6 +187,8 @@ func update_time() -> void:
 #endregion
 
 func _enter_tree() -> void:
+    is_fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+
     # Initialize Theatre
     dialogue = Dialogue.new(FileAccess.get_file_as_string(dialogue_file))
     dialogue_label.fit_content = true
