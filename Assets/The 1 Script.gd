@@ -127,13 +127,15 @@ func _on_button_display_mode_pressed() -> void:
         DisplayServer.WINDOW_MODE_FULLSCREEN if !is_fullscreen else
         DisplayServer.WINDOW_MODE_WINDOWED
     )
+
+    is_fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
     button_display_mode.text =\
-        ICON.FULLSCREEN if is_fullscreen else\
+        ICON.FULLSCREEN if !is_fullscreen else\
         ICON.FULLSCREEN_OFF
 
 func _on_button_display_mode_mouse_entered() -> void:
-    label_fullscreen.visible = is_fullscreen
-    label_windowed.visible = !is_fullscreen
+    label_fullscreen.visible = !is_fullscreen
+    label_windowed.visible = is_fullscreen
 
 func _on_button_display_mode_mouse_exited() -> void:
     label_fullscreen.visible = false
@@ -229,6 +231,8 @@ func apply_parallax(
 
 func _enter_tree() -> void:
     viewport = get_viewport()
+    label_fullscreen.visible = false
+    label_windowed.visible = false
     is_fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 
     # Initialize Theatre
