@@ -4,6 +4,14 @@ var environment : Environment
 
 @onready var timer_elapsed_second : Timer = $TimerElapsedSecond
 
+@export_category("Resource Management")
+@export_group("Sprite Expressions")
+@export var neutral : AtlasTexture
+@export var neutral_open : AtlasTexture
+@export_category("VN Elements")
+@export var sprite : CanvasItem
+@export var background : CanvasItem
+
 @export_category("Decors")
 @export var time_label : Label
 

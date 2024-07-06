@@ -1,6 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=25 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
+[ext_resource type="Texture2D" uid="uid://bv3v8hnfxq2cp" path="res://Assets/The 1 Sprite.png" id="2_4y6pa"]
+[ext_resource type="Texture2D" uid="uid://bcexsv8kn7k6y" path="res://Assets/The 1 Background.png" id="2_31udp"]
 [ext_resource type="FontFile" uid="uid://dp1p532o3fok0" path="res://Assets/The 1 Font.ttf" id="2_vjcr7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3rk7"]
@@ -208,7 +210,7 @@ _data = {
 "exit": SubResource("Animation_iexly")
 }
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("time_label", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,6 +219,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_yhgmm")
 script = ExtResource("1_816ah")
+sprite = NodePath("CanvasLayer/Control/SpriteAnchor/Sprite")
+background = NodePath("CanvasLayer/Control/BackgroundAnchor/Background")
 time_label = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/Time")
 slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
 slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
@@ -274,14 +278,50 @@ custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 color = Color(1, 1, 0, 1)
 
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+border_color = Color(0.569461, 0.388166, 1, 1)
 border_width = 5.0
+
+[node name="BackgroundAnchor" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer/Control/BackgroundAnchor"]
+texture = ExtResource("2_31udp")
+
+[node name="SpriteAnchor" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/Control/SpriteAnchor"]
+position = Vector2(0, 80)
+texture = ExtResource("2_4y6pa")
 
 [node name="DialogueLabelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
