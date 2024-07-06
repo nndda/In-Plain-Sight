@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=23 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
 [ext_resource type="FontFile" uid="uid://dp1p532o3fok0" path="res://Assets/The 1 Font.ttf" id="2_vjcr7"]
@@ -69,7 +69,77 @@ border_width_bottom = 4
 border_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_uaacf"]
-font_size = 22
+font_size = 19
+
+[sub_resource type="Animation" id="Animation_innqu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dy4kr"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1332, 0.333, 0.999),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 0), Color(1, 0.12, 0.12, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6dwn0"]
+_data = {
+"RESET": SubResource("Animation_innqu"),
+"idle": SubResource("Animation_dy4kr")
+}
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_tust2"]
+color = Color(1, 1, 1, 0.313726)
+thickness = 2
+vertical = true
+
+[sub_resource type="Animation" id="Animation_xdyc7"]
+resource_name = "RESET"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Vector2(0, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_j1v22"]
 resource_name = "enter"
@@ -127,34 +197,6 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_xdyc7"]
-resource_name = "RESET"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(-2),
-"update": 0,
-"values": [Vector2(0, 24)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(-2),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b26na"]
 _data = {
 "RESET": SubResource("Animation_xdyc7"),
@@ -171,7 +213,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_yhgmm")
 script = ExtResource("1_816ah")
-time_label = NodePath("TopControl/Margin/HBoxContainer/Left/Time")
+time_label = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/Time")
 slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
 slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
 button_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption")
@@ -184,6 +226,13 @@ spinbox_bg_opacity = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/C
 dialogue_file = "res://Assets/The 1000 Words Writing.dlg"
 actor_label = NodePath("DialogueLabelContainer/HBoxContainer/ActorLabel")
 dialogue_label_container = NodePath("DialogueLabelContainer/HBoxContainer")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 112.0
+offset_right = 688.0
+offset_bottom = 288.0
 
 [node name="TimerElapsedSecond" type="Timer" parent="."]
 
@@ -299,22 +348,58 @@ theme_override_constants/margin_bottom = 18
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TopControl/Margin"]
 layout_mode = 2
-alignment = 2
 
 [node name="Left" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Time" type="Label" parent="TopControl/Margin/HBoxContainer/Left"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TopControl/Margin/HBoxContainer/Left"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="Dot" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "󰑊"
+label_settings = SubResource("LabelSettings_uaacf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer/Dot"]
+libraries = {
+"": SubResource("AnimationLibrary_6dwn0")
+}
+autoplay = "idle"
+speed_scale = 0.6
+
+[node name="Rec" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "REC"
+label_settings = SubResource("LabelSettings_uaacf")
+
+[node name="VSeparator" type="VSeparator" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("StyleBoxLine_tust2")
+
+[node name="Time" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "00:00:00"
 label_settings = SubResource("LabelSettings_uaacf")
 
-[node name="Fullscreen" type="Button" parent="TopControl/Margin/HBoxContainer/Left"]
+[node name="Fullscreen" type="Button" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 38
+text = "󰊓"
 
 [node name="Contrast" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="Label" type="Label" parent="TopControl/Margin/HBoxContainer/Contrast"]
 layout_mode = 2
@@ -338,6 +423,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_r3rk7")
 
 [node name="Brightness" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="Label" type="Label" parent="TopControl/Margin/HBoxContainer/Brightness"]
 layout_mode = 2
