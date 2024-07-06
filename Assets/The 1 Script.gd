@@ -12,8 +12,17 @@ var environment : Environment
 @export var sprite : CanvasItem
 @export var background : CanvasItem
 
-@export_category("Decors")
+@export_category("Decors, Polish, & FX")
 @export var time_label : Label
+@export_group("Parallax")
+@export var sprite_parallax_ref : CanvasItem
+@export var sprite_parallax_distance_vec : Vector2
+@export var sprite_parallax_offset : Vector2
+@export var sprite_parallax_speed : float
+@export var background_parallax_ref : CanvasItem
+@export var background_parallax_distance_vec : Vector2
+@export var background_parallax_offset : Vector2
+@export var background_parallax_speed : float
 
 @export_category("User Configurations")
 @export var slider_brightness : HSlider
@@ -44,6 +53,14 @@ var stage := Stage.new()
 var dialogue_label := DialogueLabel.new()
 var dialogue_font_variation : FontVariation
 var dialogue_stylebox : StyleBoxFlat
+
+var viewport : Viewport
+var viewport_rect_size := Vector2()
+var viewport_centre := Vector2()
+
+var viewport_mouse_pos := Vector2()
+var viewport_mouse_distance : float = 0.0
+var viewport_mouse_direction := Vector2()
 
 const ICON : Dictionary = {
     FULLSCREEN = &"\udb80\ude93",
@@ -181,7 +198,37 @@ func update_time() -> void:
     ]
 #endregion
 
+
+func apply_parallax(
+    object : CanvasItem,
+    object_reference : CanvasItem,
+    distance_vec : Vector2,
+    power : float,
+    delta : float,
+    offset : Vector2 = Vector2()
+    ) -> void:
+
+    if object.visible:
+        var distance_max : float = Vector2.ZERO.distance_to(distance_vec)
+        var distance : float = 0.0
+
+        object_reference.position = (
+            distance_vec * viewport_mouse_direction * viewport_mouse_distance
+        ) + offset
+
+        distance = remap(
+            object.position.distance_to(object_reference.position),
+            0.0, distance_max,
+            0.0, 1.0
+        )
+
+        object.position = object.position.move_toward(object_reference.position,
+            delta * power * ease(distance, .2)
+        )
+
+
 func _enter_tree() -> void:
+    viewport = get_viewport()
     is_fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 
     # Initialize Theatre
@@ -233,6 +280,31 @@ func _input(event: InputEvent) -> void:
                     stage.progress()
             else:
                 stage.progress()
+
+
+func _process(delta: float) -> void:
+    viewport_rect_size = viewport.get_visible_rect().size
+    viewport_centre = viewport_rect_size * .5
+
+    viewport_mouse_pos = viewport.get_mouse_position()
+    viewport_mouse_distance = clampf(
+        viewport_mouse_pos.distance_to(viewport_centre) /\
+        (viewport_rect_size.length() * .5),
+    0.0, 1.0 )
+    viewport_mouse_direction = viewport_centre.direction_to(viewport_mouse_pos)
+
+    apply_parallax(
+        sprite, sprite_parallax_ref,
+        sprite_parallax_distance_vec,
+        sprite_parallax_speed, delta,
+        sprite_parallax_offset
+    )
+    apply_parallax(
+        background, background_parallax_ref,
+        background_parallax_distance_vec,
+        background_parallax_speed, delta,
+        background_parallax_offset
+    )
 
 
 #CAUTION: DON'T TRY THIS AT HOME

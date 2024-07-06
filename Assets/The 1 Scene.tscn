@@ -210,7 +210,7 @@ _data = {
 "exit": SubResource("Animation_iexly")
 }
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "sprite_parallax_ref", "background_parallax_ref", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,6 +222,13 @@ script = ExtResource("1_816ah")
 sprite = NodePath("CanvasLayer/Control/SpriteAnchor/Sprite")
 background = NodePath("CanvasLayer/Control/BackgroundAnchor/Background")
 time_label = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/Time")
+sprite_parallax_ref = NodePath("CanvasLayer/Control/SpriteAnchor/Sprite/ParallaxRef")
+sprite_parallax_distance_vec = Vector2(-48, -24)
+sprite_parallax_offset = Vector2(0, 80)
+sprite_parallax_speed = 120.0
+background_parallax_ref = NodePath("CanvasLayer/Control/BackgroundAnchor/Background/ParallaxRef")
+background_parallax_distance_vec = Vector2(48, 28)
+background_parallax_speed = 80.0
 slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
 slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
 button_display_mode = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Display")
@@ -309,6 +316,8 @@ grow_vertical = 2
 [node name="Background" type="Sprite2D" parent="CanvasLayer/Control/BackgroundAnchor"]
 texture = ExtResource("2_31udp")
 
+[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/Control/BackgroundAnchor/Background"]
+
 [node name="SpriteAnchor" type="Control" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 8
@@ -322,6 +331,9 @@ grow_vertical = 2
 [node name="Sprite" type="Sprite2D" parent="CanvasLayer/Control/SpriteAnchor"]
 position = Vector2(0, 80)
 texture = ExtResource("2_4y6pa")
+
+[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/Control/SpriteAnchor/Sprite"]
+position = Vector2(0, -80)
 
 [node name="DialogueLabelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
