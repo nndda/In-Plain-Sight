@@ -78,6 +78,7 @@ var is_fullscreen := false
 @export var spinbox_letter_spacing : SpinBox
 @export var spinbox_bg_opacity : SpinBox
 
+var font_size : int
 var allow_progress := true
 
 @export_category("Theatre Setup")
@@ -200,11 +201,12 @@ func _on_button_cc_pressed() -> void:
             panel_config_cc_animation_player.play(&"exit")
 
 func _on_spinbox_font_size_value_changed(value : float) -> void:
-    dialogue_label.add_theme_font_size_override(&"normal_font_size", int(value))
-    actor_label.add_theme_font_size_override(&"font_size", int(value))
+    font_size = int(value)
+    dialogue_label.add_theme_font_size_override(&"normal_font_size", font_size)
+    actor_label.add_theme_font_size_override(&"font_size", font_size)
     dialogue_label.update_image("end_beep",
         RichTextLabel.UPDATE_SIZE, dlg_end_beep,
-        int(value), int(value)
+        font_size, font_size
     )
 
 func _on_spinbox_letter_spacing_value_changed(value : float) -> void:
@@ -228,8 +230,7 @@ func _on_stage_progressed() -> void:
 
     dialogue_label.add_image(
         dlg_end_beep,
-        int(spinbox_font_size.value),
-        int(spinbox_font_size.value),
+        font_size, font_size,
         Color.WHITE, INLINE_ALIGNMENT_CENTER,
         Rect2(), "end_beep"
     )
@@ -518,7 +519,8 @@ func _ready() -> void:
     # Set defaults
     panel_config_cc.visible = false
 
-    spinbox_font_size.value = 18
+    font_size = 18
+    spinbox_font_size.value = font_size
     spinbox_letter_spacing.value = 1
     spinbox_bg_opacity.value = 80
 
