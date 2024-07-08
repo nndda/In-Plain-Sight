@@ -275,12 +275,28 @@ light_parallax_distance_vec = Vector2(400, 400)
 light_parallax_speed = 900.0
 sprite_parallax_ref = NodePath("CanvasLayer/VNStage/SpriteAnchor/Sprite/ParallaxRef")
 sprite_parallax_distance_vec = Vector2(-48, -24)
-sprite_parallax_offset = Vector2(0, 80)
+sprite_parallax_offset = Vector2(0, 180)
 sprite_parallax_speed = 120.0
 background_parallax_ref = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background/ParallaxRef")
 background_parallax_distance_vec = Vector2(48, 28)
 background_parallax_speed = 80.0
 shader_crt_overlay = NodePath("ShaderOverlayCRT")
+shader_crt_config = {
+"aberation_amount": 0.5,
+"grille_amount": 0.1,
+"grille_size": 1.0,
+"interference_amount": 1.0,
+"noise_amount": 0.03,
+"pixel_strength": -2,
+"resolution": Vector2(1360, 765),
+"roll_line_amount": 0.02,
+"roll_speed": 1.0,
+"scan_line_amount": 0.3,
+"scan_line_strength": -12,
+"vignette_amount": 0.5,
+"vignette_intensity": 0.3,
+"warp_amount": 0.15
+}
 slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
 slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
 button_display_mode = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Display")
@@ -307,7 +323,7 @@ follow_viewport_enabled = true
 environment = SubResource("Environment_vr7rt")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
-color = Color(0.582059, 0.657299, 0.685081, 1)
+color = Color(0.278438, 0.335524, 0.356432, 1)
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 offset_right = 1152.0
@@ -388,7 +404,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sprite" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor"]
-position = Vector2(0, 80)
+position = Vector2(0, 180)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4y6pa")
 
 [node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/SpriteAnchor/Sprite"]
