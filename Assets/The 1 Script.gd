@@ -14,7 +14,8 @@ var environment : Environment
 
 @export_category("Decors, Polish, & FX")
 @export var time_label : Label
-@onready var dlg_end_beep : AnimatedTexture = $DlgEndBeep.texture
+@export var dot_indicator : TextureRect
+@onready var dlg_end_beep : AnimatedTexture
 
 @export_group("Flashlight")
 @export var light : CanvasItem
@@ -502,6 +503,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
     environment = $CanvasLayer/WorldEnvironment.environment
+    dlg_end_beep = dot_indicator.texture
 
     stage.actor_label = actor_label
     stage.speed_scale = 0.8
