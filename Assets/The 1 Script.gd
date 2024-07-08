@@ -202,6 +202,10 @@ func _on_button_cc_pressed() -> void:
 func _on_spinbox_font_size_value_changed(value : float) -> void:
     dialogue_label.add_theme_font_size_override(&"normal_font_size", int(value))
     actor_label.add_theme_font_size_override(&"font_size", int(value))
+    dialogue_label.update_image("end_beep",
+        RichTextLabel.UPDATE_SIZE, dlg_end_beep,
+        int(value), int(value)
+    )
 
 func _on_spinbox_letter_spacing_value_changed(value : float) -> void:
     dialogue_font_variation.spacing_glyph = int(value)
@@ -222,7 +226,13 @@ func _on_stage_progressed() -> void:
     actor_label.text += ":"
     stage.speed_scale = 0.8
 
-    dialogue_label.add_image(dlg_end_beep, 20, 20)
+    dialogue_label.add_image(
+        dlg_end_beep,
+        int(spinbox_font_size.value),
+        int(spinbox_font_size.value),
+        Color.WHITE, INLINE_ALIGNMENT_CENTER,
+        Rect2(), "end_beep"
+    )
 #endregion
 
 
