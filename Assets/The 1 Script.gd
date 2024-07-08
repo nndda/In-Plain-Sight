@@ -1355,10 +1355,10 @@ class Stage extends Node:
         set(s):
             speed_scale = s
             if dialogue_label != null:
-                dialogue_label.characters_draw_tick_scaled =\
+                dialogue_label._characters_draw_tick_scaled =\
                     dialogue_label.characters_draw_tick / s
-                dialogue_label.characters_ticker.wait_time =\
-                    dialogue_label.characters_draw_tick_scaled
+                dialogue_label._characters_ticker.wait_time =\
+                    dialogue_label._characters_draw_tick_scaled
 
     @export_group("Dialogues")
 
