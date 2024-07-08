@@ -14,6 +14,7 @@ var environment : Environment
 
 @export_category("Decors, Polish, & FX")
 @export var time_label : Label
+@onready var dlg_end_beep : AnimatedTexture = $DlgEndBeep.texture
 
 @export_group("Flashlight")
 @export var light : CanvasItem
@@ -218,6 +219,10 @@ func _on_stage_progressed() -> void:
         panel_config_cc_animation_player.play(&"exit")
 
     actor_label.visible = actor_label.text != ""
+    actor_label.text += ":"
+    stage.speed_scale = 0.8
+
+    dialogue_label.add_image(dlg_end_beep, 20, 20)
 #endregion
 
 
@@ -488,6 +493,9 @@ func _ready() -> void:
     environment = $CanvasLayer/WorldEnvironment.environment
 
     stage.actor_label = actor_label
+    stage.speed_scale = 0.8
+    stage.merge_variables({
+    })
 
     dialogue_font_variation = actor_label.get_theme_font(&"font")
     dialogue_stylebox = actor_label.get_theme_stylebox(&"normal")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=37 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
 [ext_resource type="Texture2D" uid="uid://bv3v8hnfxq2cp" path="res://Assets/The 1 Sprite.png" id="2_4y6pa"]
@@ -256,6 +256,37 @@ _data = {
 "enter": SubResource("Animation_j1v22"),
 "exit": SubResource("Animation_iexly")
 }
+
+[sub_resource type="Gradient" id="Gradient_br85q"]
+colors = PackedColorArray(0, 0, 0, 0, 0.97, 0.97, 0.97, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1h400"]
+gradient = SubResource("Gradient_br85q")
+width = 1
+height = 1
+
+[sub_resource type="Gradient" id="Gradient_rdptb"]
+offsets = PackedFloat32Array(0.753333, 0.793333)
+colors = PackedColorArray(0.9, 0.099, 0.099, 1, 0.9, 0.099, 0.099, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fg68w"]
+gradient = SubResource("Gradient_rdptb")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_xd35i"]
+frames = 3
+speed_scale = 1.5
+frame_0/texture = SubResource("GradientTexture2D_1h400")
+frame_0/duration = 0.0
+frame_1/texture = SubResource("GradientTexture2D_fg68w")
+frame_1/duration = 1.25
+frame_2/texture = SubResource("GradientTexture2D_1h400")
+frame_2/duration = 1.0
 
 [node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "light", "light_parallax_ref", "sprite_parallax_ref", "background_parallax_ref", "shader_crt_overlay", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
 layout_mode = 3
@@ -746,3 +777,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="DlgEndBeep" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AnimatedTexture_xd35i")
