@@ -216,6 +216,8 @@ func _on_spinbox_bg_opacity_value_changed(value : float) -> void:
 func _on_stage_progressed() -> void:
     if panel_config_cc.visible and !panel_config_cc_animation_player.is_playing():
         panel_config_cc_animation_player.play(&"exit")
+
+    actor_label.visible = actor_label.text != ""
 #endregion
 
 
@@ -484,6 +486,8 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
     environment = $CanvasLayer/WorldEnvironment.environment
+
+    stage.actor_label = actor_label
 
     dialogue_font_variation = actor_label.get_theme_font(&"font")
     dialogue_stylebox = actor_label.get_theme_stylebox(&"normal")
