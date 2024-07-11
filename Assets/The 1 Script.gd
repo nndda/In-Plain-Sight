@@ -87,6 +87,16 @@ var allow_progress := true
 @export var actor_label : Label
 @export var dialogue_label_container : Control
 
+@export_group("History")
+@export var history_button : Button
+@export var history_button_close : Button
+@export var history_window : Control
+@export var history_container : VBoxContainer
+@export var history_scroll : ScrollContainer
+@export var history_dlg_template : VBoxContainer
+
+var history_scroll_bar : VScrollBar
+
 var dialogue : Dialogue
 var stage := Stage.new()
 var dialogue_label := DialogueLabel.new()
@@ -121,6 +131,8 @@ var mouse_on_config_state : Dictionary = {
     spinbox_font_size = false,
     spinbox_letter_spacing = false,
     spinbox_bg_opacity = false,
+
+    history_button = false,
 }
 func set_mouse_on_config_state(config_ui : String, state : bool) -> void:
     mouse_on_config_state[config_ui] = state
@@ -221,13 +233,31 @@ func _on_spinbox_bg_opacity_value_changed(value : float) -> void:
 
 
 #region NOTE: Theatre control
+func history_add(actor : String, body : String) -> void:
+    var template : Control = history_dlg_template.duplicate()
+    template.get_node(^"Actor").text = actor
+    template.get_node(^"BodyContainer/Body").text = body
+    template.visible = true
+
+    history_container.add_child(template)
+    history_scroll.get_v_scroll_bar().ratio = 1.0
+
+func _on_history_button_pressed() -> void:
+    history_window.visible = !history_window.visible
+    allow_progress = !history_window.visible
+
 func _on_stage_progressed() -> void:
     if panel_config_cc.visible and !panel_config_cc_animation_player.is_playing():
         panel_config_cc_animation_player.play(&"exit")
 
     actor_label.visible = actor_label.text != ""
     actor_label.text += ":"
-    stage.speed_scale = 0.8
+    stage.speed_scale = 0.76
+
+    history_add(
+        stage.get_current_line()["actor"].format({}),
+        stage.get_current_line()["line"].format({}),
+    )
 
     dialogue_label.add_image(
         dlg_end_beep,
@@ -529,6 +559,13 @@ func _ready() -> void:
     stage.start(dialogue)
     timer_elapsed_second.start(1.0)
     timer_elapsed_second.timeout.connect(update_time)
+
+    # Set up history
+    history_window.visible = false
+    history_dlg_template.visible = false
+    history_scroll_bar = history_scroll.get_v_scroll_bar()
+    history_button.pressed.connect(_on_history_button_pressed)
+    history_button_close.pressed.connect(_on_history_button_pressed)
 
 
 func _input(event: InputEvent) -> void:

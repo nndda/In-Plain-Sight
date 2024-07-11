@@ -251,7 +251,7 @@ _data = {
 "exit": SubResource("Animation_iexly")
 }
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "dot_indicator", "light", "light_parallax_ref", "sprite_parallax_ref", "background_parallax_ref", "shader_crt_overlay", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container")]
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "dot_indicator", "light", "light_parallax_ref", "sprite_parallax_ref", "background_parallax_ref", "shader_crt_overlay", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container", "history_button", "history_button_close", "history_window", "history_container", "history_scroll", "history_dlg_template")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -307,6 +307,12 @@ spinbox_bg_opacity = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/C
 dialogue_file = "res://Assets/The 1000 Words Writing.dlg"
 actor_label = NodePath("DialogueLabelContainer/HBoxContainer/ActorLabel")
 dialogue_label_container = NodePath("DialogueLabelContainer/HBoxContainer")
+history_button = NodePath("BottomControl/Margin/HBoxContainer/History")
+history_button_close = NodePath("HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/HistoryClose")
+history_window = NodePath("HistoryWindow")
+history_container = NodePath("HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer")
+history_scroll = NodePath("HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer")
+history_dlg_template = NodePath("HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG")
 
 [node name="TimerElapsedSecond" type="Timer" parent="."]
 
@@ -624,6 +630,7 @@ theme_override_constants/margin_bottom = 18
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BottomControl/Margin"]
 layout_mode = 2
+theme_override_constants/separation = -5
 
 [node name="CloseCaption" type="Button" parent="BottomControl/Margin/HBoxContainer"]
 custom_minimum_size = Vector2(42, 42)
@@ -729,6 +736,132 @@ value = 10.0
 alignment = 2
 suffix = "%"
 
+[node name="History" type="Button" parent="BottomControl/Margin/HBoxContainer"]
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 36
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_r3rk7")
+toggle_mode = true
+text = "󰑟 "
+
+[node name="HistoryWindow" type="Control" parent="."]
+light_mask = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="HistoryWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.658824)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HistoryWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="HistoryWindow/HBoxContainer"]
+light_mask = 0
+custom_minimum_size = Vector2(580, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g3fxj")
+
+[node name="MarginContainer" type="MarginContainer" parent="HistoryWindow/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "History:"
+
+[node name="HistoryClose" type="Button" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 36
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_r3rk7")
+toggle_mode = true
+text = "󰅗 "
+
+[node name="DLG" type="VBoxContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Actor" type="Label" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
+layout_mode = 2
+text = "Actor"
+
+[node name="BodyContainer" type="HBoxContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG/BodyContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxEmpty_r3rk7")
+
+[node name="Body" type="RichTextLabel" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG/BodyContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Some dialogue body"
+fit_content = true
+
+[node name="HSeparator" type="HSeparator" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
+self_modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 2
+theme_override_constants/separation = 7
+
 [node name="ShaderOverlayCRT" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
@@ -738,3 +871,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[connection signal="tree_entered" from="HistoryWindow" to="HistoryWindow" method="hide"]
