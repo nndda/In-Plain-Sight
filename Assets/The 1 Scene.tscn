@@ -1,9 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=35 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
 [ext_resource type="Texture2D" uid="uid://bv3v8hnfxq2cp" path="res://Assets/The 1 Sprite.png" id="2_4y6pa"]
 [ext_resource type="Texture2D" uid="uid://bcexsv8kn7k6y" path="res://Assets/The 1 Background.png" id="2_31udp"]
 [ext_resource type="FontFile" uid="uid://dp1p532o3fok0" path="res://Assets/The 1 Font.ttf" id="2_vjcr7"]
+[ext_resource type="AudioStream" uid="uid://coj44mt83320s" path="res://Assets/The 1 Ambient Noise.ogg" id="5_0ymy5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3rk7"]
 
@@ -459,27 +460,61 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopLeft" type="Line2D" parent="BorderDecor"]
+[node name="TopLeft" type="Control" parent="BorderDecor"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Line2D" type="Line2D" parent="BorderDecor/TopLeft"]
 position = Vector2(-32, -32)
 points = PackedVector2Array(304, 64, 64, 64, 64, 184)
 width = 3.0
 
-[node name="TopRight" type="Line2D" parent="BorderDecor"]
-position = Vector2(1184, -32)
+[node name="TopRight" type="Control" parent="BorderDecor"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 0
 scale = Vector2(-1, 1)
+
+[node name="Line2D" type="Line2D" parent="BorderDecor/TopRight"]
+position = Vector2(-32, -32)
 points = PackedVector2Array(304, 64, 64, 64, 64, 184)
 width = 3.0
 
-[node name="BottomLeft" type="Line2D" parent="BorderDecor"]
-position = Vector2(-32, 680)
-rotation = -3.14159
-scale = Vector2(-1, 1)
+[node name="BottomLeft" type="Control" parent="BorderDecor"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_vertical = 0
+scale = Vector2(1, -1)
+
+[node name="Line2D" type="Line2D" parent="BorderDecor/BottomLeft"]
+position = Vector2(-32, -32)
 points = PackedVector2Array(304, 64, 64, 64, 64, 184)
 width = 3.0
 
-[node name="BottomRight" type="Line2D" parent="BorderDecor"]
-position = Vector2(1184, 680)
-rotation = -3.14159
+[node name="BottomRight" type="Control" parent="BorderDecor"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(-1, -1)
+
+[node name="Line2D" type="Line2D" parent="BorderDecor/BottomRight"]
+position = Vector2(-32, -32)
 points = PackedVector2Array(304, 64, 64, 64, 64, 184)
 width = 3.0
 
@@ -757,6 +792,7 @@ toggle_mode = true
 text = "󰑟 "
 
 [node name="HistoryWindow" type="Control" parent="."]
+visible = false
 light_mask = 0
 layout_mode = 1
 anchors_preset = 15
@@ -871,5 +907,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0ymy5")
+autoplay = true
 
 [connection signal="tree_entered" from="HistoryWindow" to="HistoryWindow" method="hide"]
