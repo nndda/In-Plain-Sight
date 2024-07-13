@@ -1,5 +1,11 @@
 extends Control
 
+##=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+##
+##      Edit > Folding > Fold All Lines
+##
+##=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 var environment : Environment
 
 @onready var timer_elapsed_second : Timer = $TimerElapsedSecond
@@ -267,6 +273,19 @@ func _on_stage_progressed() -> void:
     )
 #endregion
 
+#region NOTE: Dialogue flow
+func anim(anim_name : String) -> void:
+    pass
+
+func face(expression : String) -> void:
+    pass
+
+func trans(trans_name : String) -> void:
+    pass
+
+func scene(anim : String) -> void:
+    pass
+#endregion
 
 #region NOTE: Time handler
 var elapsed_time_second : int = 60 * 18 + randi_range(-20, 45)
@@ -539,6 +558,7 @@ func _ready() -> void:
     stage.speed_scale = 0.8
     stage.merge_variables({
     })
+    stage.add_caller("f", self)
 
     dialogue_font_variation = actor_label.get_theme_font(&"font")
     dialogue_stylebox = actor_label.get_theme_stylebox(&"normal")
@@ -1566,13 +1586,13 @@ class Stage extends Node:
             ])
             if !_caller_all.has(f["caller"]):
                 printerr("Error @%s:%d - caller '%s' doesn't exists" % [
-                    current_dialogue.source_path, f["ln_num"],
+                    "UwU", f["ln_num"],
                     f["caller"],
                 ])
             else:
                 if !_caller_all[f["caller"]].has_method(f["name"]):
                     printerr("Error @%s:%d - function '%s.%s()' doesn't exists" % [
-                        current_dialogue.source_path, f["ln_num"],
+                        "UwU", f["ln_num"],
                         f["name"], f["caller"]
                     ])
                 else:
