@@ -758,7 +758,7 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ay45y"]
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "sprite_faces", "background", "spritefr", "time_label", "dot_indicator", "light", "light_parallax_ref", "sprite_parallax_ref", "background_parallax_ref", "shader_crt_overlay", "shader_glitch_overlay", "shader_blur_overlay", "user_name_input", "user_name_confirm", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container", "caller_node_anim", "caller_node_trans", "history_button", "history_button_close", "history_window", "history_container", "history_scroll", "history_dlg_template")]
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "sprite_faces", "sprite_2", "background", "time_label", "timer_elapsed_second", "dot_indicator", "light", "light_parallax_ref", "sprite_parallax_ref", "background_parallax_ref", "shader_crt_overlay", "shader_glitch_overlay", "shader_blur_overlay", "user_name_input", "user_name_confirm", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container", "caller_node_anim", "caller_node_trans", "history_button", "history_button_close", "history_window", "history_container", "history_scroll", "history_dlg_template")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -767,21 +767,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_yhgmm")
 script = ExtResource("1_816ah")
-sprite = NodePath("CanvasLayer/VNStage/SpriteAnchor/SpriteBase")
-sprite_faces = NodePath("CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces")
-background = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background")
-spritefr = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase")
+sprite = NodePath("Main/VNStage/SpriteAnchor/SpriteBase")
+sprite_faces = NodePath("Main/VNStage/SpriteAnchor/SpriteBase/Faces")
+sprite_2 = NodePath("Main/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase")
+background = NodePath("Main/VNStage/BackgroundAnchor/Background")
 time_label = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/Time")
+timer_elapsed_second = NodePath("TimerElapsedSecond")
 dot_indicator = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer/Dot")
-light = NodePath("CanvasLayer/VNStage/LightAnchor/PointLight2D")
-light_parallax_ref = NodePath("CanvasLayer/VNStage/LightAnchor/PointLight2D/ParallaxRef")
+light = NodePath("Main/VNStage/LightAnchor/PointLight2D")
+light_parallax_ref = NodePath("Main/VNStage/LightAnchor/PointLight2D/ParallaxRef")
 light_parallax_distance_vec = Vector2(400, 400)
 light_parallax_speed = 900.0
-sprite_parallax_ref = NodePath("CanvasLayer/VNStage/SpriteAnchor/SpriteBase/ParallaxRef")
+sprite_parallax_ref = NodePath("Main/VNStage/SpriteAnchor/SpriteBase/ParallaxRef")
 sprite_parallax_distance_vec = Vector2(-48, -24)
 sprite_parallax_offset = Vector2(0, 180)
 sprite_parallax_speed = 120.0
-background_parallax_ref = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background/ParallaxRef")
+background_parallax_ref = NodePath("Main/VNStage/BackgroundAnchor/Background/ParallaxRef")
 background_parallax_distance_vec = Vector2(48, 28)
 background_parallax_speed = 80.0
 shader_crt_overlay = NodePath("UI/Control/ShaderOverlayCRT")
@@ -802,7 +803,7 @@ shader_crt_config = {
 "warp_amount": 0.15
 }
 shader_glitch_overlay = NodePath("UI/Control/ShaderGlitch")
-shader_blur_overlay = NodePath("CanvasLayer/ShaderBlur")
+shader_blur_overlay = NodePath("Main/ShaderBlur")
 user_name_input = NodePath("UI/Control/Options/UserName/NamePrompt/TextEdit")
 user_name_confirm = NodePath("UI/Control/Options/UserName/Button")
 slider_brightness = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Brightness/HSlider")
@@ -820,8 +821,8 @@ spinbox_bg_opacity = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/Clo
 dialogue_file = "res://Assets/The 1000 Words Writing.dlg"
 actor_label = NodePath("UI/Control/DialogueLabelContainer/HBoxContainer/ActorLabel")
 dialogue_label_container = NodePath("UI/Control/DialogueLabelContainer/HBoxContainer")
-caller_node_anim = NodePath("CanvasLayer/VNStage/Anim")
-caller_node_trans = NodePath("CanvasLayer/VNStage/Trans")
+caller_node_anim = NodePath("Main/VNStage/Anim")
+caller_node_trans = NodePath("Main/VNStage/Trans")
 history_button = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/History")
 history_button_close = NodePath("UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/HistoryClose")
 history_window = NodePath("UI/Control/HistoryWindow")
@@ -831,17 +832,22 @@ history_dlg_template = NodePath("UI/Control/HistoryWindow/HBoxContainer/PanelCon
 
 [node name="TimerElapsedSecond" type="Timer" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0ymy5")
+autoplay = true
+parameters/looping = true
+
+[node name="Main" type="CanvasLayer" parent="."]
 layer = -2
 follow_viewport_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="CanvasLayer"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Main"]
 environment = SubResource("Environment_vr7rt")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
+[node name="CanvasModulate" type="CanvasModulate" parent="Main"]
 color = Color(0.379542, 0.449063, 0.47457, 1)
 
-[node name="VNStage" type="Control" parent="CanvasLayer"]
+[node name="VNStage" type="Control" parent="Main"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -849,17 +855,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Anim" type="AnimationPlayer" parent="CanvasLayer/VNStage"]
+[node name="Anim" type="AnimationPlayer" parent="Main/VNStage"]
 libraries = {
 "": SubResource("AnimationLibrary_pcms5")
 }
 
-[node name="Trans" type="AnimationPlayer" parent="CanvasLayer/VNStage"]
+[node name="Trans" type="AnimationPlayer" parent="Main/VNStage"]
 libraries = {
 "": SubResource("AnimationLibrary_lpag7")
 }
 
-[node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/VNStage"]
+[node name="ReferenceRect" type="ReferenceRect" parent="Main/VNStage"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -869,7 +875,7 @@ grow_vertical = 2
 border_color = Color(0.569461, 0.388166, 1, 1)
 border_width = 5.0
 
-[node name="BackgroundAnchor" type="Control" parent="CanvasLayer/VNStage"]
+[node name="BackgroundAnchor" type="Control" parent="Main/VNStage"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -879,14 +885,14 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="Sprite2D" parent="CanvasLayer/VNStage/BackgroundAnchor"]
+[node name="Background" type="Sprite2D" parent="Main/VNStage/BackgroundAnchor"]
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("2_vgb7s")
 offset = Vector2(600, 0)
 
-[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/BackgroundAnchor/Background"]
+[node name="ParallaxRef" type="Marker2D" parent="Main/VNStage/BackgroundAnchor/Background"]
 
-[node name="SpriteAnchor2" type="Control" parent="CanvasLayer/VNStage/BackgroundAnchor/Background"]
+[node name="SpriteAnchor2" type="Control" parent="Main/VNStage/BackgroundAnchor/Background"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 8
@@ -902,7 +908,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(-0.3, 0.3)
 
-[node name="SpriteBase" type="TextureRect" parent="CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2"]
+[node name="SpriteBase" type="TextureRect" parent="Main/VNStage/BackgroundAnchor/Background/SpriteAnchor2"]
 clip_contents = true
 layout_mode = 0
 offset_left = -320.0
@@ -912,13 +918,13 @@ offset_bottom = 1302.86
 scale = Vector2(0.65, 0.65)
 texture = SubResource("AtlasTexture_kf63j")
 
-[node name="talk_small" type="TextureRect" parent="CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
+[node name="talk_small" type="TextureRect" parent="Main/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
 layout_mode = 0
 texture = SubResource("AtlasTexture_gytgb")
 
-[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
+[node name="ParallaxRef" type="Marker2D" parent="Main/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
+[node name="TextureRect" type="TextureRect" parent="Main/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
 layout_mode = 0
 offset_left = 70.3299
 offset_top = 1090.11
@@ -926,7 +932,7 @@ offset_right = 739.33
 offset_bottom = 1758.11
 texture = SubResource("GradientTexture2D_hxfi5")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="CanvasLayer/VNStage/BackgroundAnchor/Background"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Main/VNStage/BackgroundAnchor/Background"]
 amount = 80
 process_material = SubResource("ParticleProcessMaterial_jdy7c")
 texture = SubResource("GradientTexture2D_xpa4y")
@@ -937,7 +943,7 @@ interpolate = false
 fract_delta = false
 local_coords = true
 
-[node name="SpriteAnchor" type="Control" parent="CanvasLayer/VNStage"]
+[node name="SpriteAnchor" type="Control" parent="Main/VNStage"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -948,40 +954,40 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SpriteBase" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor"]
+[node name="SpriteBase" type="Sprite2D" parent="Main/VNStage/SpriteAnchor"]
 position = Vector2(-8, 216)
 scale = Vector2(0.65, 0.65)
 texture = SubResource("AtlasTexture_kf63j")
 
-[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase"]
+[node name="ParallaxRef" type="Marker2D" parent="Main/VNStage/SpriteAnchor/SpriteBase"]
 
-[node name="Faces" type="Node2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase"]
+[node name="Faces" type="Node2D" parent="Main/VNStage/SpriteAnchor/SpriteBase"]
 
-[node name="talk_small" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+[node name="talk_small" type="Sprite2D" parent="Main/VNStage/SpriteAnchor/SpriteBase/Faces"]
 texture = SubResource("AtlasTexture_gytgb")
 
-[node name="scawy" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+[node name="scawy" type="Sprite2D" parent="Main/VNStage/SpriteAnchor/SpriteBase/Faces"]
 texture = SubResource("AtlasTexture_w5lih")
 
-[node name="giggles" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+[node name="giggles" type="Sprite2D" parent="Main/VNStage/SpriteAnchor/SpriteBase/Faces"]
 texture = SubResource("AtlasTexture_ybpnu")
 
-[node name="angy" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+[node name="angy" type="Sprite2D" parent="Main/VNStage/SpriteAnchor/SpriteBase/Faces"]
 texture = SubResource("AtlasTexture_tcvh1")
 
-[node name="smile" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+[node name="smile" type="Sprite2D" parent="Main/VNStage/SpriteAnchor/SpriteBase/Faces"]
 texture = SubResource("AtlasTexture_dmqxk")
 
-[node name="dark" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+[node name="dark" type="Sprite2D" parent="Main/VNStage/SpriteAnchor/SpriteBase/Faces"]
 texture = SubResource("AtlasTexture_fc3wb")
 
-[node name="dark_melt" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces/dark"]
+[node name="dark_melt" type="Sprite2D" parent="Main/VNStage/SpriteAnchor/SpriteBase/Faces/dark"]
 visible = false
 material = SubResource("ShaderMaterial_mkloe")
 position = Vector2(32, -608)
 texture = SubResource("AtlasTexture_hgjv4")
 
-[node name="LightAnchor" type="Control" parent="CanvasLayer/VNStage"]
+[node name="LightAnchor" type="Control" parent="Main/VNStage"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -991,15 +997,15 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PointLight2D" type="PointLight2D" parent="CanvasLayer/VNStage/LightAnchor"]
+[node name="PointLight2D" type="PointLight2D" parent="Main/VNStage/LightAnchor"]
 blend_mode = 2
 range_layer_min = -2
 range_layer_max = -2
 texture = SubResource("GradientTexture2D_6cuo3")
 
-[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/LightAnchor/PointLight2D"]
+[node name="ParallaxRef" type="Marker2D" parent="Main/VNStage/LightAnchor/PointLight2D"]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="Main"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1007,7 +1013,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="ShaderBlur" type="ColorRect" parent="CanvasLayer"]
+[node name="ShaderBlur" type="ColorRect" parent="Main"]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -1015,11 +1021,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_0ymy5")
-autoplay = true
-parameters/looping = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -1033,7 +1034,6 @@ grow_vertical = 2
 theme = SubResource("Theme_yhgmm")
 
 [node name="DialogueLabelContainer" type="PanelContainer" parent="UI/Control"]
-visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -1531,6 +1531,9 @@ text = "Name:"
 [node name="TextEdit" type="TextEdit" parent="UI/Control/Options/UserName/NamePrompt"]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r3rk7")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_r3rk7")
 placeholder_text = "_"
 shortcut_keys_enabled = false
 scroll_fit_content_height = true
@@ -1579,10 +1582,10 @@ color = Color(0, 0, 0, 1)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 
-[connection signal="tree_entered" from="CanvasLayer/VNStage/SpriteAnchor" to="CanvasLayer/VNStage/SpriteAnchor" method="hide"]
-[connection signal="tree_entered" from="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces" to="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces" method="show"]
-[connection signal="tree_entered" from="CanvasLayer/ColorRect" to="CanvasLayer/ColorRect" method="show"]
-[connection signal="tree_entered" from="CanvasLayer/ShaderBlur" to="CanvasLayer/ShaderBlur" method="hide"]
+[connection signal="tree_entered" from="Main/VNStage/SpriteAnchor" to="Main/VNStage/SpriteAnchor" method="hide"]
+[connection signal="tree_entered" from="Main/VNStage/SpriteAnchor/SpriteBase/Faces" to="Main/VNStage/SpriteAnchor/SpriteBase/Faces" method="show"]
+[connection signal="tree_entered" from="Main/ColorRect" to="Main/ColorRect" method="show"]
+[connection signal="tree_entered" from="Main/ShaderBlur" to="Main/ShaderBlur" method="hide"]
 [connection signal="tree_entered" from="UI/Control/DialogueLabelContainer" to="UI/Control/DialogueLabelContainer" method="hide"]
 [connection signal="tree_entered" from="UI/Control/HistoryWindow" to="UI/Control/HistoryWindow" method="hide"]
 [connection signal="tree_entered" from="UI/Control/Options" to="UI/Control/Options" method="show"]

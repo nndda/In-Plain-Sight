@@ -7,18 +7,18 @@ extends Control
 ##=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 var environment : Environment
-
-@onready var timer_elapsed_second : Timer = $TimerElapsedSecond
+@onready var tree : SceneTree = get_tree()
 
 @export_category("Resource Management")
 @export_category("VN Elements")
 @export var sprite : Sprite2D
 @export var sprite_faces : Node2D
+@export var sprite_2 : CanvasItem
 @export var background : Sprite2D
-@export var spritefr : CanvasItem
 
 @export_category("Decors, Polish, & FX")
 @export var time_label : Label
+@export var timer_elapsed_second : Timer
 @export var dot_indicator : TextureRect
 @onready var dlg_end_beep : AnimatedTexture
 
@@ -30,7 +30,6 @@ var environment : Environment
 @export var light_parallax_speed : float
 
 @export_group("Parallax")
-@export var spritefr_parallax_ref : CanvasItem
 @export var sprite_parallax_ref : CanvasItem
 @export var sprite_parallax_distance_vec : Vector2
 @export var sprite_parallax_offset : Vector2
@@ -89,11 +88,13 @@ var shader_blur := Shader.new()
 @export var user_name_confirm : Button
 @export var slider_brightness : HSlider
 @export var slider_contrast : HSlider
+
 @export_group("Fullscreen")
 @export var button_display_mode : Button
 @export var label_fullscreen : Label
 @export var label_windowed : Label
 var is_fullscreen := false
+
 @export_group("Closed Caption")
 @export var button_cc : Button
 @export var panel_config_cc : Control
@@ -133,14 +134,12 @@ var dialogue_font_variation : FontVariation
 var dialogue_stylebox : StyleBoxFlat
 
 var viewport : Viewport
-var viewport_rect_size := Vector2()
-var viewport_centre := Vector2()
+var viewport_rect_size := Vector2.ZERO
+var viewport_centre := Vector2.ZERO
 
-var viewport_mouse_pos := Vector2()
+var viewport_mouse_pos := Vector2.ZERO
 var viewport_mouse_distance : float = 0.0
-var viewport_mouse_direction := Vector2()
-
-@onready var tree : SceneTree = get_tree()
+var viewport_mouse_direction := Vector2.ZERO
 
 const ICON : Dictionary = {
     FULLSCREEN = &"\udb80\ude93",
@@ -167,6 +166,8 @@ func _on_user_name_confirm_pressed() -> void:
         dialogue_label_container.visible = true
         stage.start(dialogue)
         timer_elapsed_second.start(1.0)
+
+        $UI/Control/Options.queue_free()
 #endregion
 
 #region NOTE: User configurations
@@ -196,7 +197,7 @@ func is_mouse_on_config() -> bool:
 
 func initialize_config_ui() -> void:
     for config_ui : String in mouse_on_config_state:
-        var config_node : Control = get(&"%s" % config_ui)
+        var config_node : Control = get(config_ui)
         config_node.mouse_entered.connect(
             set_mouse_on_config_state.bind(config_ui, true)
         )
@@ -295,11 +296,11 @@ func history_add(actor : String, body : String) -> void:
     template.visible = true
 
     history_container.add_child(template)
-    history_scroll.get_v_scroll_bar().ratio = 1.0
 
 func _on_history_button_pressed() -> void:
     history_window.visible = !history_window.visible
     allow_progress = !history_window.visible
+    history_scroll_bar.ratio = 1.0
 
 func _on_stage_progressed() -> void:
     if panel_config_cc.visible and !panel_config_cc_animation_player.is_playing():
@@ -307,7 +308,7 @@ func _on_stage_progressed() -> void:
 
     actor_label.visible = actor_label.text != ""
     actor_label.text += ":"
-    stage.speed_scale = 0.76
+    #stage.speed_scale = 0.76
 
     history_add(
         stage.get_current_line()["actor"].format({}),
@@ -383,12 +384,11 @@ var elapsed_second : int
 
 func update_time() -> void:
     elapsed_time_second += 1
-    elapsed_hour = int(elapsed_time_second / 3600.0)
     elapsed_minute = int((elapsed_time_second % 3600) / 60.0)
     elapsed_second = int(elapsed_time_second % 60)
 
-    time_label.text = "%02d:%02d:%02d" % [
-        elapsed_hour, elapsed_minute, elapsed_second
+    time_label.text = "00:%02d:%02d" % [
+        elapsed_minute, elapsed_second
     ]
 #endregion
 
@@ -701,7 +701,7 @@ func _enter_tree() -> void:
     label_windowed.visible = false
     is_fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 
-    # Initialize shaders
+    #region Initialize shaders
     shader_crt.code = SHADER_CRT_CODES
     shader_crt_material.shader = shader_crt
     shader_crt_overlay.material = shader_crt_material
@@ -716,8 +716,9 @@ func _enter_tree() -> void:
     shader_blur_material.shader = shader_blur
     shader_blur_overlay.material = shader_blur_material
     shader_blur_overlay.visible = true
+    #endregion
 
-    # Initialize Theatre
+    #region Initialize Theatre
     dialogue = Dialogue.new(FileAccess.get_file_as_string(dialogue_file))
     dialogue_label.fit_content = true
     dialogue_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -736,6 +737,7 @@ func _enter_tree() -> void:
     
     # DEBUG
     #stage.allow_skip = true
+    #endregion
 
 
 func _ready() -> void:
@@ -744,8 +746,6 @@ func _ready() -> void:
 
     stage.actor_label = actor_label
     stage.speed_scale = 0.8
-    stage.merge_variables({
-    })
     stage.add_caller("f", self)
     stage.finished.connect(_on_stage_finished)
 
@@ -765,7 +765,6 @@ func _ready() -> void:
     spinbox_letter_spacing.value = 1
     spinbox_bg_opacity.value = 80
 
-    #stage.start(dialogue)
     timer_elapsed_second.timeout.connect(update_time)
 
     # Set up history
@@ -775,7 +774,7 @@ func _ready() -> void:
     history_button.pressed.connect(_on_history_button_pressed)
     history_button_close.pressed.connect(_on_history_button_pressed)
 
-    #
+    # Initialize user name
     user_name_input.text_changed.connect(_on_user_name_input_text_changed)
     user_name_confirm.pressed.connect(_on_user_name_confirm_pressed)
     user_name_confirm.modulate.a = 0.0
@@ -787,17 +786,12 @@ func _ready() -> void:
 
     face_current = faces["scawy"]
     face_current.modulate.a = 1.0
-    #face_current.visible = true
-
-    #shader_blur_overlay.visible = true
 
     user_name_input.grab_focus()
 
     print("-".repeat(80))
     print(dialogue.humanize())
     print("-".repeat(80))
-
-    print(dialogue.get_word_count())
 
 
 func _input(event: InputEvent) -> void:
@@ -839,9 +833,6 @@ func _process(delta: float) -> void:
         background_parallax_speed, delta,
         background_parallax_offset
     )
-    #apply_parallax(spritefr, spritefr_parallax_ref,
-        #Vector2(25.0, 15.0), 100, delta
-    #)
 
 
 #CAUTION: DON'T TRY THIS AT HOME
