@@ -10,12 +10,25 @@ config_version=5
 
 [application]
 
-config/name="o2a2-2024"
+config/name="In Plain Sight"
+run/main_scene="res://Assets/The 1 Scene.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="res://icon.png"
+
+[audio]
+
+buses/default_bus_layout="res://audio_bus_layout.tres"
 
 [display]
 
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/always_on_top=true
+window/size/window_width_override=1280
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 
 [gui]
@@ -41,4 +54,5 @@ Pause={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 limits/global_shader_variables/buffer_size=4096

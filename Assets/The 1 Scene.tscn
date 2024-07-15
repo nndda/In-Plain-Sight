@@ -1,8 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://dbrdb68pj4ouf"]
+[gd_scene load_steps=61 format=3 uid="uid://dbrdb68pj4ouf"]
 
 [ext_resource type="Script" path="res://Assets/The 1 Script.gd" id="1_816ah"]
 [ext_resource type="Texture2D" uid="uid://bv3v8hnfxq2cp" path="res://Assets/The 1 Sprite.png" id="2_4y6pa"]
-[ext_resource type="Texture2D" uid="uid://bcexsv8kn7k6y" path="res://Assets/The 1 Background.png" id="2_31udp"]
+[ext_resource type="Texture2D" uid="uid://2m0if2bj344j" path="res://Assets/The 1 Background.webp" id="2_vgb7s"]
 [ext_resource type="FontFile" uid="uid://dp1p532o3fok0" path="res://Assets/The 1 Font.ttf" id="2_vjcr7"]
 [ext_resource type="AudioStream" uid="uid://coj44mt83320s" path="res://Assets/The 1 Ambient Noise.ogg" id="5_0ymy5"]
 
@@ -59,6 +59,484 @@ background_mode = 3
 background_canvas_max_layer = -2
 adjustment_enabled = true
 
+[sub_resource type="Animation" id="Animation_1ps0d"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteAnchor:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BackgroundAnchor/Background/SpriteAnchor2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3bqts"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteAnchor:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6xbgr"]
+resource_name = "fade_in_tru"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BackgroundAnchor/Background/SpriteAnchor2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333334, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_88e3g"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpriteAnchor:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.966667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pcms5"]
+_data = {
+"RESET": SubResource("Animation_1ps0d"),
+"fade_in": SubResource("Animation_3bqts"),
+"fade_in_tru": SubResource("Animation_6xbgr"),
+"fade_out": SubResource("Animation_88e3g")
+}
+
+[sub_resource type="Animation" id="Animation_2wei8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteAnchor:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpriteAnchor:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(640, 360)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpriteAnchor/SpriteBase/Faces/dark:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../Camera2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(640, 360)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../Camera2D:zoom")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../..:shader_blur_lod")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../ShaderBlur:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_onand"]
+resource_name = "enter_building"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteAnchor:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_d6dma"]
+resource_name = "pan_left"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(1736, 360), Vector2(640, 360)]
+}
+
+[sub_resource type="Animation" id="Animation_7h5uj"]
+resource_name = "pan_right"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(640, 360), Vector2(1736, 360)]
+}
+
+[sub_resource type="Animation" id="Animation_jqkk0"]
+resource_name = "spook"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../UI/Control/ShaderGlitch:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteAnchor:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpriteAnchor/SpriteBase:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.7, 1.86667, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.625, 0.625), Vector2(0.625, 0.625)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpriteAnchor:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.6, 1.76667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(640, 880), Vector2(640, 880), Vector2(640, 360)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SpriteAnchor/SpriteBase/Faces/dark:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_yevt7"]
+resource_name = "spook_end"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../UI/Control/ShaderGlitch:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpriteAnchor/SpriteBase:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.766667, 3),
+"transitions": PackedFloat32Array(1, 0.5, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.625, 0.625), Vector2(0.625, 0.625)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpriteAnchor:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.833333, 1.86667),
+"transitions": PackedFloat32Array(1, 0.5, 1, 1),
+"update": 0,
+"values": [Vector2(640, 880), Vector2(640, 880), Vector2(640, 360), Vector2(640, 360)]
+}
+
+[sub_resource type="Animation" id="Animation_oxt45"]
+resource_name = "zoom"
+length = 1.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.933333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.933333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(640, 360), Vector2(640, 224)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..:shader_blur_lod")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.36667),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [0.0, 5.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../ShaderBlur:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.36667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_lot1b"]
+resource_name = "zoom_end"
+length = 1.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.03333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.03333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(640, 224), Vector2(640, 360)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..:shader_blur_lod")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.666667, 1.23333),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [0.0, 5.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../ShaderBlur:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.23333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lpag7"]
+_data = {
+"RESET": SubResource("Animation_2wei8"),
+"enter_building": SubResource("Animation_onand"),
+"pan_left": SubResource("Animation_d6dma"),
+"pan_right": SubResource("Animation_7h5uj"),
+"spook": SubResource("Animation_jqkk0"),
+"spook_end": SubResource("Animation_yevt7"),
+"zoom": SubResource("Animation_oxt45"),
+"zoom_end": SubResource("Animation_lot1b")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kf63j"]
+atlas = ExtResource("2_4y6pa")
+region = Rect2(4800, 0, 800, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gytgb"]
+atlas = ExtResource("2_4y6pa")
+region = Rect2(2400, 0, 800, 1920)
+
+[sub_resource type="Gradient" id="Gradient_3anue"]
+offsets = PackedFloat32Array(0.131579, 1)
+colors = PackedColorArray(0, 0, 0.0627451, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hxfi5"]
+gradient = SubResource("Gradient_3anue")
+fill = 1
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(1, 0.3)
+metadata/_snap_enabled = true
+
 [sub_resource type="Curve" id="Curve_8b67c"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.521875, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -92,6 +570,32 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.9, 0.1)
 metadata/_snap_enabled = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5lih"]
+atlas = ExtResource("2_4y6pa")
+region = Rect2(3200, 0, 800, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybpnu"]
+atlas = ExtResource("2_4y6pa")
+region = Rect2(800, 0, 800, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcvh1"]
+atlas = ExtResource("2_4y6pa")
+region = Rect2(0, 0, 800, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmqxk"]
+atlas = ExtResource("2_4y6pa")
+region = Rect2(4000, 0, 800, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fc3wb"]
+atlas = ExtResource("2_4y6pa")
+region = Rect2(1600, 0, 800, 1920)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mkloe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgjv4"]
+atlas = ExtResource("2_4y6pa")
+region = Rect2(1600, 0, 800, 1920)
 
 [sub_resource type="Gradient" id="Gradient_7gi7t"]
 offsets = PackedFloat32Array(0, 0.206061, 0.448485, 0.624242, 0.787879, 1)
@@ -167,7 +671,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
+tracks/0/path = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -179,7 +683,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
+tracks/1/path = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -195,7 +699,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
+tracks/0/path = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -207,7 +711,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
+tracks/1/path = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -223,7 +727,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
+tracks/0/path = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -235,7 +739,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
+tracks/1/path = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -252,7 +756,9 @@ _data = {
 "exit": SubResource("Animation_iexly")
 }
 
-[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "background", "time_label", "dot_indicator", "light", "light_parallax_ref", "sprite_parallax_ref", "background_parallax_ref", "shader_crt_overlay", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container", "history_button", "history_button_close", "history_window", "history_container", "history_scroll", "history_dlg_template")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ay45y"]
+
+[node name="The1Scene" type="Control" node_paths=PackedStringArray("sprite", "sprite_faces", "background", "spritefr", "time_label", "dot_indicator", "light", "light_parallax_ref", "sprite_parallax_ref", "background_parallax_ref", "shader_crt_overlay", "shader_glitch_overlay", "shader_blur_overlay", "user_name_input", "user_name_confirm", "slider_brightness", "slider_contrast", "button_display_mode", "label_fullscreen", "label_windowed", "button_cc", "panel_config_cc", "panel_config_cc_animation_player", "panel_config_cc_2", "spinbox_font_size", "spinbox_letter_spacing", "spinbox_bg_opacity", "actor_label", "dialogue_label_container", "caller_node_anim", "caller_node_trans", "history_button", "history_button_close", "history_window", "history_container", "history_scroll", "history_dlg_template")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -261,22 +767,24 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_yhgmm")
 script = ExtResource("1_816ah")
-sprite = NodePath("CanvasLayer/VNStage/SpriteAnchor/Sprite")
+sprite = NodePath("CanvasLayer/VNStage/SpriteAnchor/SpriteBase")
+sprite_faces = NodePath("CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces")
 background = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background")
-time_label = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/Time")
-dot_indicator = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer/Dot")
+spritefr = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase")
+time_label = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/Time")
+dot_indicator = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer/Dot")
 light = NodePath("CanvasLayer/VNStage/LightAnchor/PointLight2D")
 light_parallax_ref = NodePath("CanvasLayer/VNStage/LightAnchor/PointLight2D/ParallaxRef")
 light_parallax_distance_vec = Vector2(400, 400)
 light_parallax_speed = 900.0
-sprite_parallax_ref = NodePath("CanvasLayer/VNStage/SpriteAnchor/Sprite/ParallaxRef")
+sprite_parallax_ref = NodePath("CanvasLayer/VNStage/SpriteAnchor/SpriteBase/ParallaxRef")
 sprite_parallax_distance_vec = Vector2(-48, -24)
 sprite_parallax_offset = Vector2(0, 180)
 sprite_parallax_speed = 120.0
 background_parallax_ref = NodePath("CanvasLayer/VNStage/BackgroundAnchor/Background/ParallaxRef")
 background_parallax_distance_vec = Vector2(48, 28)
 background_parallax_speed = 80.0
-shader_crt_overlay = NodePath("ShaderOverlayCRT")
+shader_crt_overlay = NodePath("UI/Control/ShaderOverlayCRT")
 shader_crt_config = {
 "aberation_amount": 0.5,
 "grille_amount": 0.1,
@@ -293,27 +801,33 @@ shader_crt_config = {
 "vignette_intensity": 0.3,
 "warp_amount": 0.15
 }
-slider_brightness = NodePath("TopControl/Margin/HBoxContainer/Brightness/HSlider")
-slider_contrast = NodePath("TopControl/Margin/HBoxContainer/Contrast/HSlider")
-button_display_mode = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Display")
-label_fullscreen = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Fullscreen")
-label_windowed = NodePath("TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Windowed")
-button_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption")
-panel_config_cc = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control")
-panel_config_cc_animation_player = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/AnimationPlayer")
-panel_config_cc_2 = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer")
-spinbox_font_size = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize/SpinBox")
-spinbox_letter_spacing = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing/SpinBox")
-spinbox_bg_opacity = NodePath("BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity/SpinBox")
+shader_glitch_overlay = NodePath("UI/Control/ShaderGlitch")
+shader_blur_overlay = NodePath("CanvasLayer/ShaderBlur")
+user_name_input = NodePath("UI/Control/Options/UserName/NamePrompt/TextEdit")
+user_name_confirm = NodePath("UI/Control/Options/UserName/Button")
+slider_brightness = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Brightness/HSlider")
+slider_contrast = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Contrast/HSlider")
+button_display_mode = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Display")
+label_fullscreen = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Fullscreen")
+label_windowed = NodePath("UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2/Windowed")
+button_cc = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption")
+panel_config_cc = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control")
+panel_config_cc_animation_player = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/AnimationPlayer")
+panel_config_cc_2 = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer")
+spinbox_font_size = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize/SpinBox")
+spinbox_letter_spacing = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing/SpinBox")
+spinbox_bg_opacity = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity/SpinBox")
 dialogue_file = "res://Assets/The 1000 Words Writing.dlg"
-actor_label = NodePath("DialogueLabelContainer/HBoxContainer/ActorLabel")
-dialogue_label_container = NodePath("DialogueLabelContainer/HBoxContainer")
-history_button = NodePath("BottomControl/Margin/HBoxContainer/History")
-history_button_close = NodePath("HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/HistoryClose")
-history_window = NodePath("HistoryWindow")
-history_container = NodePath("HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer")
-history_scroll = NodePath("HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer")
-history_dlg_template = NodePath("HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG")
+actor_label = NodePath("UI/Control/DialogueLabelContainer/HBoxContainer/ActorLabel")
+dialogue_label_container = NodePath("UI/Control/DialogueLabelContainer/HBoxContainer")
+caller_node_anim = NodePath("CanvasLayer/VNStage/Anim")
+caller_node_trans = NodePath("CanvasLayer/VNStage/Trans")
+history_button = NodePath("UI/Control/BottomControl/Margin/HBoxContainer/History")
+history_button_close = NodePath("UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/HistoryClose")
+history_window = NodePath("UI/Control/HistoryWindow")
+history_container = NodePath("UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer")
+history_scroll = NodePath("UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer")
+history_dlg_template = NodePath("UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG")
 
 [node name="TimerElapsedSecond" type="Timer" parent="."]
 
@@ -325,31 +839,7 @@ follow_viewport_enabled = true
 environment = SubResource("Environment_vr7rt")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
-color = Color(0.278438, 0.335524, 0.356432, 1)
-
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
-offset_right = 1152.0
-offset_bottom = 648.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="Colors" type="HBoxContainer" parent="CanvasLayer/CenterContainer"]
-layout_mode = 2
-
-[node name="C" type="ColorRect" parent="CanvasLayer/CenterContainer/Colors"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(0, 1, 1, 1)
-
-[node name="M" type="ColorRect" parent="CanvasLayer/CenterContainer/Colors"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(1, 0, 1, 1)
-
-[node name="Y" type="ColorRect" parent="CanvasLayer/CenterContainer/Colors"]
-custom_minimum_size = Vector2(48, 48)
-layout_mode = 2
-color = Color(1, 1, 0, 1)
+color = Color(0.379542, 0.449063, 0.47457, 1)
 
 [node name="VNStage" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -358,6 +848,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Anim" type="AnimationPlayer" parent="CanvasLayer/VNStage"]
+libraries = {
+"": SubResource("AnimationLibrary_pcms5")
+}
+
+[node name="Trans" type="AnimationPlayer" parent="CanvasLayer/VNStage"]
+libraries = {
+"": SubResource("AnimationLibrary_lpag7")
+}
 
 [node name="ReferenceRect" type="ReferenceRect" parent="CanvasLayer/VNStage"]
 layout_mode = 1
@@ -380,12 +880,54 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Background" type="Sprite2D" parent="CanvasLayer/VNStage/BackgroundAnchor"]
-texture = ExtResource("2_31udp")
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2_vgb7s")
+offset = Vector2(600, 0)
 
 [node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/BackgroundAnchor/Background"]
 
+[node name="SpriteAnchor2" type="Control" parent="CanvasLayer/VNStage/BackgroundAnchor/Background"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.6111
+offset_top = -407.444
+offset_right = -80.6111
+offset_bottom = -407.444
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(-0.3, 0.3)
+
+[node name="SpriteBase" type="TextureRect" parent="CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2"]
+clip_contents = true
+layout_mode = 0
+offset_left = -320.0
+offset_top = -617.143
+offset_right = 480.0
+offset_bottom = 1302.86
+scale = Vector2(0.65, 0.65)
+texture = SubResource("AtlasTexture_kf63j")
+
+[node name="talk_small" type="TextureRect" parent="CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
+layout_mode = 0
+texture = SubResource("AtlasTexture_gytgb")
+
+[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/VNStage/BackgroundAnchor/Background/SpriteAnchor2/SpriteBase"]
+layout_mode = 0
+offset_left = 70.3299
+offset_top = 1090.11
+offset_right = 739.33
+offset_bottom = 1758.11
+texture = SubResource("GradientTexture2D_hxfi5")
+
 [node name="GPUParticles2D" type="GPUParticles2D" parent="CanvasLayer/VNStage/BackgroundAnchor/Background"]
-amount = 45
+amount = 80
 process_material = SubResource("ParticleProcessMaterial_jdy7c")
 texture = SubResource("GradientTexture2D_xpa4y")
 lifetime = 3.0
@@ -396,6 +938,7 @@ fract_delta = false
 local_coords = true
 
 [node name="SpriteAnchor" type="Control" parent="CanvasLayer/VNStage"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -405,13 +948,38 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sprite" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor"]
-position = Vector2(0, 180)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_4y6pa")
+[node name="SpriteBase" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor"]
+position = Vector2(-8, 216)
+scale = Vector2(0.65, 0.65)
+texture = SubResource("AtlasTexture_kf63j")
 
-[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/SpriteAnchor/Sprite"]
-position = Vector2(0, -80)
+[node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase"]
+
+[node name="Faces" type="Node2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase"]
+
+[node name="talk_small" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+texture = SubResource("AtlasTexture_gytgb")
+
+[node name="scawy" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+texture = SubResource("AtlasTexture_w5lih")
+
+[node name="giggles" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+texture = SubResource("AtlasTexture_ybpnu")
+
+[node name="angy" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+texture = SubResource("AtlasTexture_tcvh1")
+
+[node name="smile" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+texture = SubResource("AtlasTexture_dmqxk")
+
+[node name="dark" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces"]
+texture = SubResource("AtlasTexture_fc3wb")
+
+[node name="dark_melt" type="Sprite2D" parent="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces/dark"]
+visible = false
+material = SubResource("ShaderMaterial_mkloe")
+position = Vector2(32, -608)
+texture = SubResource("AtlasTexture_hgjv4")
 
 [node name="LightAnchor" type="Control" parent="CanvasLayer/VNStage"]
 layout_mode = 1
@@ -431,19 +999,59 @@ texture = SubResource("GradientTexture2D_6cuo3")
 
 [node name="ParallaxRef" type="Marker2D" parent="CanvasLayer/VNStage/LightAnchor/PointLight2D"]
 
-[node name="DialogueLabelContainer" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 216.0
-offset_top = 488.0
-offset_right = 936.0
-offset_bottom = 624.0
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ShaderBlur" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0ymy5")
+autoplay = true
+parameters/looping = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_yhgmm")
+
+[node name="DialogueLabelContainer" type="PanelContainer" parent="UI/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 200.0
+offset_top = -200.0
+offset_right = -200.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_r3rk7")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DialogueLabelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/DialogueLabelContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="ActorLabel" type="Label" parent="DialogueLabelContainer/HBoxContainer"]
+[node name="ActorLabel" type="Label" parent="UI/Control/DialogueLabelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_fonts/font = SubResource("FontVariation_ebyde")
@@ -451,7 +1059,7 @@ theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_g3fxj")
 text = "Actor:"
 
-[node name="BorderDecor" type="Control" parent="."]
+[node name="BorderDecor" type="Control" parent="UI/Control"]
 modulate = Color(1, 1, 1, 0.533333)
 layout_mode = 1
 anchors_preset = 15
@@ -460,17 +1068,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopLeft" type="Control" parent="BorderDecor"]
+[node name="TopLeft" type="Control" parent="UI/Control/BorderDecor"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Line2D" type="Line2D" parent="BorderDecor/TopLeft"]
+[node name="Line2D" type="Line2D" parent="UI/Control/BorderDecor/TopLeft"]
 position = Vector2(-32, -32)
 points = PackedVector2Array(304, 64, 64, 64, 64, 184)
 width = 3.0
 
-[node name="TopRight" type="Control" parent="BorderDecor"]
+[node name="TopRight" type="Control" parent="UI/Control/BorderDecor"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -480,12 +1088,12 @@ offset_bottom = 40.0
 grow_horizontal = 0
 scale = Vector2(-1, 1)
 
-[node name="Line2D" type="Line2D" parent="BorderDecor/TopRight"]
+[node name="Line2D" type="Line2D" parent="UI/Control/BorderDecor/TopRight"]
 position = Vector2(-32, -32)
 points = PackedVector2Array(304, 64, 64, 64, 64, 184)
 width = 3.0
 
-[node name="BottomLeft" type="Control" parent="BorderDecor"]
+[node name="BottomLeft" type="Control" parent="UI/Control/BorderDecor"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -495,12 +1103,12 @@ offset_bottom = 40.0
 grow_vertical = 0
 scale = Vector2(1, -1)
 
-[node name="Line2D" type="Line2D" parent="BorderDecor/BottomLeft"]
+[node name="Line2D" type="Line2D" parent="UI/Control/BorderDecor/BottomLeft"]
 position = Vector2(-32, -32)
 points = PackedVector2Array(304, 64, 64, 64, 64, 184)
 width = 3.0
 
-[node name="BottomRight" type="Control" parent="BorderDecor"]
+[node name="BottomRight" type="Control" parent="UI/Control/BorderDecor"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -513,102 +1121,103 @@ grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(-1, -1)
 
-[node name="Line2D" type="Line2D" parent="BorderDecor/BottomRight"]
+[node name="Line2D" type="Line2D" parent="UI/Control/BorderDecor/BottomRight"]
 position = Vector2(-32, -32)
 points = PackedVector2Array(304, 64, 64, 64, 64, 184)
 width = 3.0
 
-[node name="TopControl" type="PanelContainer" parent="."]
+[node name="TopControl" type="PanelContainer" parent="UI/Control"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 32.0
+offset_left = 24.0
 offset_top = 32.0
 offset_right = -32.0
-offset_bottom = 87.0
+offset_bottom = 208.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_r3rk7")
 
-[node name="Margin" type="MarginContainer" parent="TopControl"]
+[node name="Margin" type="MarginContainer" parent="UI/Control/TopControl"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 18
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TopControl/Margin"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/TopControl/Margin"]
 layout_mode = 2
 
-[node name="Left" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
+[node name="Left" type="HBoxContainer" parent="UI/Control/TopControl/Margin/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TopControl/Margin/HBoxContainer/Left"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/TopControl/Margin/HBoxContainer/Left"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = -1
 
-[node name="Dot" type="TextureRect" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="Dot" type="TextureRect" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(22, 22)
 layout_mode = 2
 texture = SubResource("AnimatedTexture_xd35i")
 
-[node name="VSeparator" type="VSeparator" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_r3rk7")
 
-[node name="Rec" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="Rec" type="Label" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "REC"
 label_settings = SubResource("LabelSettings_uaacf")
 
-[node name="VSeparator" type="VSeparator" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
 theme_override_styles/separator = SubResource("StyleBoxLine_tust2")
 
-[node name="Time" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
+[node name="Time" type="Label" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "00:00:00"
 label_settings = SubResource("LabelSettings_uaacf")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer"]
 layout_mode = 2
 
-[node name="Display" type="Button" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
+[node name="Display" type="Button" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(48, 45)
 layout_mode = 2
+focus_mode = 0
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 38
 text = "󰊓"
 
-[node name="Fullscreen" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
+[node name="Fullscreen" type="Label" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "set to fullscreen"
 
-[node name="Windowed" type="Label" parent="TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
+[node name="Windowed" type="Label" parent="UI/Control/TopControl/Margin/HBoxContainer/Left/VBoxContainer/HBoxContainer2"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "set to windowed"
 
-[node name="Contrast" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
+[node name="Contrast" type="HBoxContainer" parent="UI/Control/TopControl/Margin/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="TopControl/Margin/HBoxContainer/Contrast"]
+[node name="Label" type="Label" parent="UI/Control/TopControl/Margin/HBoxContainer/Contrast"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "󰆗"
 
-[node name="HSlider" type="HSlider" parent="TopControl/Margin/HBoxContainer/Contrast"]
+[node name="HSlider" type="HSlider" parent="UI/Control/TopControl/Margin/HBoxContainer/Contrast"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -618,21 +1227,21 @@ max_value = 1.0
 step = 0.05
 value = 0.5
 
-[node name="VSeparator" type="VSeparator" parent="TopControl/Margin/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="UI/Control/TopControl/Margin/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_r3rk7")
 
-[node name="Brightness" type="HBoxContainer" parent="TopControl/Margin/HBoxContainer"]
+[node name="Brightness" type="HBoxContainer" parent="UI/Control/TopControl/Margin/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Label" type="Label" parent="TopControl/Margin/HBoxContainer/Brightness"]
+[node name="Label" type="Label" parent="UI/Control/TopControl/Margin/HBoxContainer/Brightness"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "󰖨"
 
-[node name="HSlider" type="HSlider" parent="TopControl/Margin/HBoxContainer/Brightness"]
+[node name="HSlider" type="HSlider" parent="UI/Control/TopControl/Margin/HBoxContainer/Brightness"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -642,32 +1251,32 @@ max_value = 1.0
 step = 0.05
 value = 0.5
 
-[node name="BottomControl" type="PanelContainer" parent="."]
+[node name="BottomControl" type="PanelContainer" parent="UI/Control"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = -64.0
-offset_right = -32.0
+offset_left = 24.0
+offset_top = -114.0
+offset_right = -24.0
 offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_r3rk7")
 
-[node name="Margin" type="MarginContainer" parent="BottomControl"]
+[node name="Margin" type="MarginContainer" parent="UI/Control/BottomControl"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 18
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BottomControl/Margin"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/BottomControl/Margin"]
 layout_mode = 2
 theme_override_constants/separation = -5
 
-[node name="CloseCaption" type="Button" parent="BottomControl/Margin/HBoxContainer"]
+[node name="CloseCaption" type="Button" parent="UI/Control/BottomControl/Margin/HBoxContainer"]
 custom_minimum_size = Vector2(42, 42)
 layout_mode = 2
 focus_mode = 0
@@ -687,7 +1296,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_r3rk7")
 toggle_mode = true
 text = "󰅞 "
 
-[node name="Control" type="Control" parent="BottomControl/Margin/HBoxContainer/CloseCaption"]
+[node name="Control" type="Control" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption"]
 modulate = Color(1, 1, 1, 0)
 show_behind_parent = true
 layout_mode = 1
@@ -697,14 +1306,14 @@ offset_top = 24.0
 offset_bottom = 24.0
 grow_horizontal = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control"]
-root_node = NodePath("../../../../../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control"]
+root_node = NodePath("../../../../../../../..")
 libraries = {
 "": SubResource("AnimationLibrary_b26na")
 }
 autoplay = "RESET"
 
-[node name="PanelContainer" type="PanelContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -713,25 +1322,25 @@ offset_top = -104.0
 offset_right = 280.0
 grow_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="FontSize" type="HBoxContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="FontSize" type="HBoxContainer" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize"]
+[node name="Label" type="Label" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Font size"
 
-[node name="SpinBox" type="SpinBox" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize"]
+[node name="SpinBox" type="SpinBox" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/FontSize"]
 layout_mode = 2
 min_value = 14.0
 max_value = 28.0
@@ -739,15 +1348,15 @@ value = 22.0
 alignment = 2
 suffix = "px"
 
-[node name="LetterSpacing" type="HBoxContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="LetterSpacing" type="HBoxContainer" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing"]
+[node name="Label" type="Label" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Letter spacing"
 
-[node name="SpinBox" type="SpinBox" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing"]
+[node name="SpinBox" type="SpinBox" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/LetterSpacing"]
 layout_mode = 2
 min_value = 1.0
 max_value = 6.0
@@ -755,15 +1364,15 @@ value = 1.0
 alignment = 2
 suffix = "px"
 
-[node name="BackgroundOpacity" type="HBoxContainer" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="BackgroundOpacity" type="HBoxContainer" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity"]
+[node name="Label" type="Label" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Background opacity"
 
-[node name="SpinBox" type="SpinBox" parent="BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity"]
+[node name="SpinBox" type="SpinBox" parent="UI/Control/BottomControl/Margin/HBoxContainer/CloseCaption/Control/PanelContainer/MarginContainer/VBoxContainer/BackgroundOpacity"]
 layout_mode = 2
 min_value = 10.0
 step = 10.0
@@ -771,7 +1380,7 @@ value = 10.0
 alignment = 2
 suffix = "%"
 
-[node name="History" type="Button" parent="BottomControl/Margin/HBoxContainer"]
+[node name="History" type="Button" parent="UI/Control/BottomControl/Margin/HBoxContainer"]
 custom_minimum_size = Vector2(42, 42)
 layout_mode = 2
 focus_mode = 0
@@ -791,7 +1400,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_r3rk7")
 toggle_mode = true
 text = "󰑟 "
 
-[node name="HistoryWindow" type="Control" parent="."]
+[node name="HistoryWindow" type="Control" parent="UI/Control"]
 visible = false
 light_mask = 0
 layout_mode = 1
@@ -801,7 +1410,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="HistoryWindow"]
+[node name="ColorRect" type="ColorRect" parent="UI/Control/HistoryWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -810,7 +1419,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.658824)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HistoryWindow"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/HistoryWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -819,39 +1428,39 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="HistoryWindow/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/HistoryWindow/HBoxContainer"]
 light_mask = 0
 custom_minimum_size = Vector2(580, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_g3fxj")
 
-[node name="MarginContainer" type="MarginContainer" parent="HistoryWindow/HBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="Label" type="Label" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "History:"
 
-[node name="HistoryClose" type="Button" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="HistoryClose" type="Button" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(42, 42)
 layout_mode = 2
 focus_mode = 0
@@ -871,34 +1480,71 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_r3rk7")
 toggle_mode = true
 text = "󰅗 "
 
-[node name="DLG" type="VBoxContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="DLG" type="VBoxContainer" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Actor" type="Label" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
+[node name="Actor" type="Label" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
 layout_mode = 2
 text = "Actor"
 
-[node name="BodyContainer" type="HBoxContainer" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
+[node name="BodyContainer" type="HBoxContainer" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
 layout_mode = 2
 
-[node name="VSeparator" type="VSeparator" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG/BodyContainer"]
+[node name="VSeparator" type="VSeparator" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG/BodyContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxEmpty_r3rk7")
 
-[node name="Body" type="RichTextLabel" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG/BodyContainer"]
+[node name="Body" type="RichTextLabel" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG/BodyContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
 text = "Some dialogue body"
 fit_content = true
 
-[node name="HSeparator" type="HSeparator" parent="HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
+[node name="HSeparator" type="HSeparator" parent="UI/Control/HistoryWindow/HBoxContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer/DLG"]
 self_modulate = Color(1, 1, 1, 0.498039)
 layout_mode = 2
 theme_override_constants/separation = 7
 
-[node name="ShaderOverlayCRT" type="ColorRect" parent="."]
+[node name="Options" type="CenterContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="UserName" type="VBoxContainer" parent="UI/Control/Options"]
+layout_mode = 2
+
+[node name="NamePrompt" type="HBoxContainer" parent="UI/Control/Options/UserName"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Control/Options/UserName/NamePrompt"]
+layout_mode = 2
+text = "Name:"
+
+[node name="TextEdit" type="TextEdit" parent="UI/Control/Options/UserName/NamePrompt"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+placeholder_text = "_"
+shortcut_keys_enabled = false
+scroll_fit_content_height = true
+
+[node name="HSeparator" type="HSeparator" parent="UI/Control/Options/UserName"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/Control/Options/UserName"]
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Start"
+
+[node name="ShaderOverlayCRT" type="ColorRect" parent="UI/Control"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -908,8 +1554,37 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_0ymy5")
-autoplay = true
+[node name="ShaderGlitch" type="ColorRect" parent="UI/Control"]
+visible = false
+material = SubResource("ShaderMaterial_ay45y")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
 
-[connection signal="tree_entered" from="HistoryWindow" to="HistoryWindow" method="hide"]
+[node name="Black" type="ColorRect" parent="UI/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[connection signal="tree_entered" from="CanvasLayer/VNStage/SpriteAnchor" to="CanvasLayer/VNStage/SpriteAnchor" method="hide"]
+[connection signal="tree_entered" from="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces" to="CanvasLayer/VNStage/SpriteAnchor/SpriteBase/Faces" method="show"]
+[connection signal="tree_entered" from="CanvasLayer/ColorRect" to="CanvasLayer/ColorRect" method="show"]
+[connection signal="tree_entered" from="CanvasLayer/ShaderBlur" to="CanvasLayer/ShaderBlur" method="hide"]
+[connection signal="tree_entered" from="UI/Control/DialogueLabelContainer" to="UI/Control/DialogueLabelContainer" method="hide"]
+[connection signal="tree_entered" from="UI/Control/HistoryWindow" to="UI/Control/HistoryWindow" method="hide"]
+[connection signal="tree_entered" from="UI/Control/Options" to="UI/Control/Options" method="show"]
+[connection signal="tree_entered" from="UI/Control/ShaderGlitch" to="UI/Control/ShaderGlitch" method="hide"]
+[connection signal="tree_entered" from="UI/Control/Black" to="UI/Control/Black" method="hide"]

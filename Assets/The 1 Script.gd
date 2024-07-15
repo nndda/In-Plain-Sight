@@ -11,12 +11,11 @@ var environment : Environment
 @onready var timer_elapsed_second : Timer = $TimerElapsedSecond
 
 @export_category("Resource Management")
-@export_group("Sprite Expressions")
-@export var neutral : AtlasTexture
-@export var neutral_open : AtlasTexture
 @export_category("VN Elements")
-@export var sprite : CanvasItem
-@export var background : CanvasItem
+@export var sprite : Sprite2D
+@export var sprite_faces : Node2D
+@export var background : Sprite2D
+@export var spritefr : CanvasItem
 
 @export_category("Decors, Polish, & FX")
 @export var time_label : Label
@@ -31,6 +30,7 @@ var environment : Environment
 @export var light_parallax_speed : float
 
 @export_group("Parallax")
+@export var spritefr_parallax_ref : CanvasItem
 @export var sprite_parallax_ref : CanvasItem
 @export var sprite_parallax_distance_vec : Vector2
 @export var sprite_parallax_offset : Vector2
@@ -41,6 +41,7 @@ var environment : Environment
 @export var background_parallax_speed : float
 
 @export_group("Shaders")
+
 @export_subgroup("CRT")
 var shader_crt_update : Callable = func():
     for crt_param : StringName in shader_crt_config:
@@ -68,7 +69,24 @@ var shader_crt_update : Callable = func():
 var shader_crt_material := ShaderMaterial.new()
 var shader_crt := Shader.new()
 
+@export_subgroup("Glitch")
+@export var shader_glitch_overlay : ColorRect
+var shader_glitch := Shader.new()
+
+@export_subgroup("Blur")
+@export_range(0.0, 5.0) var shader_blur_lod : float = 0.0:
+    set(v):
+        shader_blur_lod = v
+        shader_blur_material\
+            .set_shader_parameter(&"lod", v)
+@export var shader_blur_overlay : ColorRect
+var shader_blur_material := ShaderMaterial.new()
+var shader_blur := Shader.new()
+
+
 @export_category("User Configurations")
+@export var user_name_input : TextEdit
+@export var user_name_confirm : Button
 @export var slider_brightness : HSlider
 @export var slider_contrast : HSlider
 @export_group("Fullscreen")
@@ -92,6 +110,11 @@ var allow_progress := true
 @export_file("*.dlg") var dialogue_file : String = ""
 @export var actor_label : Label
 @export var dialogue_label_container : Control
+@export var caller_node_anim : AnimationPlayer
+@export var caller_node_trans : AnimationPlayer
+var face_tween : Tween
+var face_current : Sprite2D
+var faces : Dictionary
 
 @export_group("History")
 @export var history_button : Button
@@ -117,11 +140,34 @@ var viewport_mouse_pos := Vector2()
 var viewport_mouse_distance : float = 0.0
 var viewport_mouse_direction := Vector2()
 
+@onready var tree : SceneTree = get_tree()
+
 const ICON : Dictionary = {
     FULLSCREEN = &"\udb80\ude93",
     FULLSCREEN_OFF = &"\udb80\ude94",
 }
 
+#region NOTE: User name prompt
+func _on_user_name_input_text_changed() -> void:
+    user_name_confirm.disabled = user_name_input.text.is_empty()
+    user_name_confirm.modulate.a = 0.0 if\
+        user_name_confirm.disabled else\
+        1.0
+
+func _on_user_name_confirm_pressed() -> void:
+    if !user_name_input.text.is_empty():
+        stage.set_variable("player", user_name_input.text)
+        $UI/Control/Options/UserName.visible = false
+        user_name_confirm.disabled = true
+
+        await tree.create_timer(2.9).timeout
+
+        $UI/Control/Options.visible = false
+        $UI/Control/DialogueLabelContainer.visible = true
+        dialogue_label_container.visible = true
+        stage.start(dialogue)
+        timer_elapsed_second.start(1.0)
+#endregion
 
 #region NOTE: User configurations
 var mouse_on_config_state : Dictionary = {
@@ -199,10 +245,14 @@ func _on_button_display_mode_mouse_exited() -> void:
     label_windowed.visible = false
 
 func _on_slider_contrast_value_changed(value : float) -> void:
-    environment.adjustment_contrast = value
+    environment.adjustment_contrast = remap(
+        value, 0.0, 1.0, 0.25, 1.75
+    )
 
 func _on_slider_brightness_value_changed(value: float) -> void:
-    environment.adjustment_brightness = value
+    environment.adjustment_brightness = remap(
+        value, 0.0, 1.0, 0.25, 1.75
+    )
 
 func _on_panel_config_cc_animation_player_animation_started(anim_name : StringName) -> void:
     if anim_name == &"enter":
@@ -237,12 +287,11 @@ func _on_spinbox_bg_opacity_value_changed(value : float) -> void:
     dialogue_stylebox.border_color.a = value
 #endregion
 
-
 #region NOTE: Theatre control
 func history_add(actor : String, body : String) -> void:
     var template : Control = history_dlg_template.duplicate()
-    template.get_node(^"Actor").text = actor
-    template.get_node(^"BodyContainer/Body").text = body
+    template.get_node(^"Actor").text = actor.format(stage.variables)
+    template.get_node(^"BodyContainer/Body").text = body.format(stage.variables)
     template.visible = true
 
     history_container.add_child(template)
@@ -271,24 +320,63 @@ func _on_stage_progressed() -> void:
         Color.WHITE, INLINE_ALIGNMENT_CENTER,
         Rect2(), "end_beep"
     )
+
+func _on_stage_finished() -> void:
+    $UI/Control/Black.visible = true
+
+    await tree.create_timer(2.4).timeout
+    tree.quit()
 #endregion
 
 #region NOTE: Dialogue flow
 func anim(anim_name : String) -> void:
-    pass
+    caller_node_anim.play(anim_name)
 
 func face(expression : String) -> void:
-    pass
+    if expression != face_current.name:
+        face_tween = create_tween().bind_node(self).set_parallel(true)
+
+        face_tween.tween_property(
+            face_current, ^"modulate:a", 0.0, 0.5
+        ).set_ease(Tween.EASE_OUT)
+
+        face_current = faces[expression]
+
+        face_tween.tween_property(
+            face_current, ^"modulate:a", 1.0, 0.5
+        ).set_ease(Tween.EASE_OUT)
 
 func trans(trans_name : String) -> void:
-    pass
+    caller_node_trans.play(trans_name)
 
-func scene(anim : String) -> void:
-    pass
+func glitch_1() -> void:
+    shader_glitch_overlay.visible = true
+    shader_glitch_overlay.material.set_shader_parameter(
+        &"shake_power", 0.01
+    )
+    shader_glitch_overlay.material.set_shader_parameter(
+        &"shake_color_rate", 0.01
+    )
+
+func glitch_2() -> void:
+    shader_glitch_overlay.material.set_shader_parameter(
+        &"shake_power", 0.025
+    )
+    shader_glitch_overlay.material.set_shader_parameter(
+        &"shake_color_rate", 0.015
+    )
+
+func glitch_3() -> void:
+    shader_glitch_overlay.material.set_shader_parameter(
+        &"shake_power", 0.05
+    )
+    shader_glitch_overlay.material.set_shader_parameter(
+        &"shake_color_rate", 0.04
+    )
 #endregion
 
 #region NOTE: Time handler
-var elapsed_time_second : int = 60 * 18 + randi_range(-20, 45)
+var elapsed_time_second : int = 60 * 28 + randi_range(-20, 45)
 var elapsed_hour : int
 var elapsed_minute : int
 var elapsed_second : int
@@ -304,9 +392,9 @@ func update_time() -> void:
     ]
 #endregion
 
-
 #region NOTE: Shaders
-const SHADER_CRT_CODES : String = """
+const SHADER_CRT_CODES : String =\
+    """
     /*
     Shader from Godot Shaders - the free shader library.
 
@@ -486,7 +574,96 @@ const SHADER_CRT_CODES : String = """
     COLOR.rgb = clr;
     COLOR.a = 1.0;
     }
-"""
+    """
+
+const SHADER_GLITCH_CODES : String =\
+    """
+    /*
+        Glitch Effect Shader by Yui Kinomoto @arlez80
+
+        MIT License
+        Copyright (c) 2020-2022 Yui Kinomoto
+
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+
+        The above copyright notice and this permission notice shall be included in
+        all copies or substantial portions of the Software.
+
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        THE SOFTWARE.
+    */
+
+    shader_type canvas_item;
+    uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+    // 振動の強さ
+    const float shake_power = 0.03;
+    // 振動率
+    const float shake_rate = 1.0;
+    // 振動速度
+    const float shake_speed = 5.0;
+    // 振動ブロックサイズ
+    const float shake_block_size = 40.5;
+    // 色の分離率
+    uniform float shake_color_rate : hint_range( 0.0, 1.0 ) = 0.06;
+
+    float random( float seed )
+    {
+        return fract( 543.2543 * sin( dot( vec2( seed, seed ), vec2( 3525.46, -54.3415 ) ) ) );
+    }
+
+    void fragment( )
+    {
+        float enable_shift = float(
+            random( trunc( TIME * shake_speed ) )
+        <    shake_rate
+        );
+
+        vec2 fixed_uv = SCREEN_UV;
+        fixed_uv.x += (
+            random(
+                ( trunc( SCREEN_UV.y * shake_block_size ) / shake_block_size )
+            +    TIME
+            ) - 0.5
+        ) * shake_power * enable_shift;
+
+        vec4 pixel_color = textureLod( SCREEN_TEXTURE, fixed_uv, 0.0 );
+        pixel_color.r = mix(
+            pixel_color.r
+        ,    textureLod( SCREEN_TEXTURE, fixed_uv + vec2( shake_color_rate, 0.0 ), 0.0 ).r
+        ,    enable_shift
+        );
+        pixel_color.b = mix(
+            pixel_color.b
+        ,    textureLod( SCREEN_TEXTURE, fixed_uv + vec2( -shake_color_rate, 0.0 ), 0.0 ).b
+        ,    enable_shift
+        );
+        COLOR = pixel_color;
+    }
+    """
+
+const SHADER_BLUR_CODES : String =\
+    """
+    shader_type canvas_item;
+
+    uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+    uniform float lod: hint_range(0.0, 5) = 0.0;
+
+    void fragment(){
+       vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV, lod);
+       COLOR = color;
+    }
+    """
 #endregion
 
 
@@ -532,6 +709,14 @@ func _enter_tree() -> void:
 
     shader_crt_update.call()
 
+    shader_glitch.code = SHADER_GLITCH_CODES
+    shader_glitch_overlay.material.shader = shader_glitch
+
+    shader_blur.code = SHADER_BLUR_CODES
+    shader_blur_material.shader = shader_blur
+    shader_blur_overlay.material = shader_blur_material
+    shader_blur_overlay.visible = true
+
     # Initialize Theatre
     dialogue = Dialogue.new(FileAccess.get_file_as_string(dialogue_file))
     dialogue_label.fit_content = true
@@ -548,6 +733,9 @@ func _enter_tree() -> void:
     stage.allow_cancel = false
     stage.allow_func = true
     stage.allow_skip = false
+    
+    # DEBUG
+    #stage.allow_skip = true
 
 
 func _ready() -> void:
@@ -559,6 +747,7 @@ func _ready() -> void:
     stage.merge_variables({
     })
     stage.add_caller("f", self)
+    stage.finished.connect(_on_stage_finished)
 
     dialogue_font_variation = actor_label.get_theme_font(&"font")
     dialogue_stylebox = actor_label.get_theme_stylebox(&"normal")
@@ -576,8 +765,7 @@ func _ready() -> void:
     spinbox_letter_spacing.value = 1
     spinbox_bg_opacity.value = 80
 
-    stage.start(dialogue)
-    timer_elapsed_second.start(1.0)
+    #stage.start(dialogue)
     timer_elapsed_second.timeout.connect(update_time)
 
     # Set up history
@@ -586,6 +774,30 @@ func _ready() -> void:
     history_scroll_bar = history_scroll.get_v_scroll_bar()
     history_button.pressed.connect(_on_history_button_pressed)
     history_button_close.pressed.connect(_on_history_button_pressed)
+
+    #
+    user_name_input.text_changed.connect(_on_user_name_input_text_changed)
+    user_name_confirm.pressed.connect(_on_user_name_confirm_pressed)
+    user_name_confirm.modulate.a = 0.0
+
+    for face_ in sprite_faces.get_children():
+        faces[face_.name] = face_
+        face_.visible = true
+        face_.modulate.a = 0.0
+
+    face_current = faces["scawy"]
+    face_current.modulate.a = 1.0
+    #face_current.visible = true
+
+    #shader_blur_overlay.visible = true
+
+    user_name_input.grab_focus()
+
+    print("-".repeat(80))
+    print(dialogue.humanize())
+    print("-".repeat(80))
+
+    print(dialogue.get_word_count())
 
 
 func _input(event: InputEvent) -> void:
@@ -627,6 +839,9 @@ func _process(delta: float) -> void:
         background_parallax_speed, delta,
         background_parallax_offset
     )
+    #apply_parallax(spritefr, spritefr_parallax_ref,
+        #Vector2(25.0, 15.0), 100, delta
+    #)
 
 
 #CAUTION: DON'T TRY THIS AT HOME
@@ -795,7 +1010,7 @@ class Dialogue extends Resource:
     ## Returns the human-readable string of the compiled [Dialogue]. This will return the [Dialogue]
     ## without the Dialogue tags and/or BBCode tags. Optionally, insert the variables used by passing it to [param variables].
     func humanize(variables : Dictionary = {}) -> String:
-        return _strip(variables)
+        return _strip(variables, true)
 
     func _strip(
         variables : Dictionary = {},
