@@ -1,0 +1,481 @@
+
+
+
+_:
+    (A metal door,
+        d=0.8
+    unboarded,
+        d=0.8
+    and untangled from any overgrowth.
+        d=1.0
+    A promising entrance.)
+:
+    (And a stark contrast
+        d=0.4
+    to every other potential entry point we've encountered.)
+:
+    (Rusted shut
+        d=0.4
+    and jammed tight,
+        d=0.9
+    but it finally gave way after some good shoves.)
+:
+    (Metallic screech breaks the silence,
+        d=1.2
+    as the rusty hinges creak open.)
+#:
+#    (After countless time looking for an entrance...)
+:
+    (I close the metal door behind.)
+:
+    ...
+
+    f.trans("enter_building")
+:
+    (And found myself standing in a stretched hallway.
+        d=0.86
+    Just a few meters in front of me is an expansive lobby,
+        d=0.9
+    waiting to be explored.)
+:
+    (Now,
+        d=0.8
+    I should let the others know about this entr-)
+
+
+
+Iris:
+    "Boo!"
+    d=1.2
+
+    f.face("scawy")
+    f.trans("spook")
+:
+    "[color=#ffffffa0]*giggles*[/color]
+        d=1.2
+    Did I scare you?"
+
+    f.face("giggles")
+    f.trans("spook_end")
+
+
+
+{player}:
+    "Didn't even flinch."
+        d=0.6
+
+    f.face("smile")
+:
+    "Where the hell have you been?"
+_:
+    (Iris,
+        d=0.9
+    a fellow explorer
+        d=0.9
+    and long-time friend of mine.)
+:
+   (The fact that she's here tells me
+        d=0.3
+    that there were probably no other entrances.)
+:
+    (Since she's usually the first one to find an entrance, and got in.)
+
+
+
+Iris:
+    "I was actually right behind you for a while."
+        d=1.5
+:
+    "You recording?"
+        d=0.15
+
+    f.face("talk_small")
+
+
+
+{player}:
+    "Yes"
+
+    f.trans("zoom")
+:
+    "I am recording your dumb-ass in full HD.
+        d=0.95
+    We've been recording for like half an hour."
+
+    f.face("angy")
+
+
+
+Iris:
+    "Hi everyone!"
+
+    f.face("talk_small")
+
+
+
+{player}:
+    "Sorry for the Iris jumpscare folks.
+        d=0.8
+    But here we are,
+        d=0.95
+    in the{s=0.4}...{s}
+        d=0.3
+    {0}whatever this facility is."
+
+    f.trans("zoom_end")
+    f.face("smile")
+
+
+
+Iris:
+    "I've already told others we found an entrance."
+    f.face("talk_small")
+
+
+
+{player}:
+    "Nice."
+
+    f.face("smile")
+:
+    "So,
+        d=0.85
+#    no one has found any entrance huh?"
+    we're the first one to get in huh?"
+        d=0.6
+:
+    "This place is sealed tight.
+        d=0.7
+    We're lucky to have this one opening."
+
+
+
+Iris:
+    {s=1.1}"Makes me even more curious about what's inside."
+
+    f.face("talk_small")
+
+
+
+{player}:
+    "I've scoured the web far and beyond,
+        d=0.96
+    deep down many rabbit holes,
+        d=0.96
+    {s=0.8}and still can't find anything about this place."
+
+    f.face("smile")
+
+
+
+Iris:
+    "Exciting right?
+        d=1.0
+    {s=0.85}What are they keeping from the world outside?"
+
+    f.face("talk_small")
+
+
+
+{player}:
+    "Probably some boring stuff.
+        d=0.98
+    Just another decommissioned government building,
+        d=0.89    
+    or some defunct research facility."
+
+    f.face("smile")
+:
+    "But it is still exciting."
+:
+    "Hopefully we don't encounter any squatters,
+        d=0.8
+    or anyone at all."
+
+
+
+Iris:
+    "or ghosts..."
+    f.face("talk_small")
+:
+    {s=1.5}"or some incomprehensible entities beyond our realm of understanding!"
+    f.face("scawy")
+
+
+
+{player}:
+    {s=0.8}"Right..."
+
+    f.face("smile")
+:
+    "Let's just explore the nearby area for a bit.
+        d=0.9
+    While waiting for everyone to get here."
+
+    f.face("smile")
+:
+    "Now
+        d=0.8
+    let's get some good footage."
+
+_:
+    ...{d=1.2}
+    f.anim("fade_out")
+
+
+# =====================================================================================================================
+
+
+
+_:
+    (I approached the open entranceway to my right.
+        d=1.0
+    Bearing a sign that is barely legible.)
+:
+    (Desks,
+        d=0.5
+    chairs,
+        d=0.5
+    your typical office furnitures and appliances,
+        d=0.6
+    coated with dusts.)
+:
+    (But also,
+        d=0.7
+    all sort of scientific instruments and chemical appliances.)
+
+:
+    ...
+    f.anim("fade_in")
+
+:
+    (Right behind me,
+        d=0.8
+    is Iris,
+        d=0.6
+    following.)
+
+:
+    (It's a bit unusual for her,
+        d=0.95
+    as she's usually just wandering around on her own.)
+
+{player}:
+    "Feeling a little bit spooky huh?"
+
+
+Iris:
+    "No.
+        d=0.9
+    I just don't want you to get scared."
+    f.face("talk_small")
+
+
+{player}:
+    "Sure sure."
+    f.face("smile")
+
+
+_:
+    (But it's good that we're sticking together for once.)
+
+:
+    ...
+
+:
+    (Now,
+        d=0.8
+    there's one thing that stands out the most in this entire area.)
+:
+    (And is probably one the reasons why we struggle to find an entrance.)
+:
+    (Lies behind the windows in this building...)
+:
+    (Are cold,
+        d=0.68
+    rusted,
+        d=0.68
+    metallic panels
+        d=0.55
+    bolted from the inside.
+        d=0.9
+    Almost as thick as my thumb.
+        d=0.8
+    Seamless and sealed shut.
+        d=0.9
+    At least,
+        d=0.3
+    for the most part of it.)
+
+
+
+{player}:
+    "{s=0.67}I...{s}
+        d=0.96
+    haven't seen anything like this before."
+:
+    "Metal this thick,
+        d=0.9
+    for boarding up this many windows?"
+:
+    "I've seen woods used extensively,
+        d=0.9
+    but this one just completely sealed out the room."
+
+
+Iris:
+    "I know right?"
+    f.face("talk_small")
+:
+    "Very sweet of them,
+        d=0.85
+    still caring about the people outside."
+
+
+{player}:
+    {d=1.5}"What?"
+    f.face("smile")
+:
+    "I don't know how are these metal-boarded windows related to that..."
+:
+    "But anyway,
+        d=0.9
+    it just now crossed my mind."
+:
+    "This building's interior,
+        d=0.9
+    apart from a few cracks in the wall,
+        d=0.9
+    and the dust-chocked environment.
+        d=1.0
+    This place is rather spotless."
+:
+    "All of the furnitures seems neatly arranged,
+        d=0.76
+    and I haven't seen a {s=0.3}single smudge{s} of grafitti yet."
+
+
+
+Iris:
+    "Glad you noticed!
+        d=0.9
+    I put lots of effort into keeping it clean."
+
+    f.face("giggles")
+
+
+
+{player}:
+    "..."
+:
+    {s=0.6}"Uh huh..."
+:
+    "What?
+        d=0.7
+    you got in yesterday,
+        d=0.6
+    and clean up everything?"
+    f.face("smile")
+
+
+
+Iris:
+    "Kind of..."
+:
+    "You know, spray paint is harder to clean than blood."
+#    "Spray paint are harder to clean off than blood you know?"
+    f.face("talk_small")
+:
+    "So, I have to react fast when someone pulls out one of those cans."
+
+
+
+{player}:
+    {s=0.7}"..."
+    f.face("smile")
+:
+    "Are you okay?"{d=0.8}
+
+_:
+    ...
+:
+    (I'd usually just chalk that off as Iris messing with me.)
+#:
+#    (And she did a great job at that.)
+:
+    (But,
+        d=0.9
+    there's something strange about her.)
+
+
+
+:
+    ...
+
+
+:
+    (The short moments of silence quickly broken by a distant noise)
+:
+    (I turn my eyes over the hallway.)
+    f.trans("pan_right")
+#:
+#    (From a distant, I hear a noise.)
+:
+    (Still faint, but getting closer with each seconds.
+        d=0.9
+    The noises turns to voices)
+:
+    (A familiar voices.)
+:
+    (My ears did not deceive me.)
+
+:
+    ...
+    f.anim("fade_in_tru")
+
+Iris:
+    "{player}! hey! over here!"
+
+_:
+#    (My eyes did not deceive me.)
+#:
+    (Iris...
+        d=0.9
+    way over there,
+        d=0.9
+    calling me.)
+
+
+
+Iris:
+    "Guys!
+        d=0.8
+    I found em!"
+:
+    "Where the hell have you been?"
+
+
+_:
+    (and right behind her,
+        d=0.95
+    is the rest of my crew.)
+
+
+???:
+    "What's wrong, {player}?"
+    f.trans("pan_left")
+
+???:
+    "Are you okay?"
+    f.glitch_1()
+:
+    "Is there something wrong?"
+    f.glitch_2()
+:
+    "Is there something wrong {player}?"
+    f.glitch_3()
+
+
+
+
+# =====================================================================================================================
